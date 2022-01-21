@@ -1,4 +1,5 @@
 import {useRoutes} from 'hookrouter';
+import React from "react";
 import About from '../view/About';
 import Index from "../view/index";
 
