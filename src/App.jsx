@@ -6,7 +6,7 @@ import Router from "./router";
 
 function App() {
   return  (
-      <ConfigProvider primaryColor='#007fff' locale={zhCN}>
+      <ConfigProvider primaryColor='#F08830' locale={zhCN}>
         <Router />
       </ConfigProvider>
   )

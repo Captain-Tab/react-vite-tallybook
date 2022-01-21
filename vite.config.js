@@ -1,9 +1,8 @@
 import { defineConfig } from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
 import styleImport from 'vite-plugin-style-import'
-import react from '@vitejs/plugin-react'
-
 // https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [
     reactRefresh(),
@@ -45,7 +44,7 @@ export default defineConfig({
         proxy: {
             '/api': {
                 // 当遇到 /api 路径时，将其转换成 target 的值
-                target: 'http://api.chennick.wang',
+                target: 'http://127.0.0.1:7001',
                 changeOrigin: true,
                 rewrite: path => path.replace(/^\/api/, '') // 将 /api 重写为空
             }
