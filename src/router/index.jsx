@@ -5,13 +5,14 @@ import Statics from "../view/statics";
 import User from "../view/user";
 import Layout from '../components/layout';
 
-// wrap page component
+// wrap the page component
 function withLayout(page){
     return <Layout>{page}</Layout>
 }
 
+// define route map
 const routes = {
-    '/' :()=> withLayout( <Bill/> ),
+    '/' :()=> withLayout(<Bill/> ),
     '/statics': ()=> withLayout(<Statics />),
     '/user' :()=> withLayout(<User/>)
 };
