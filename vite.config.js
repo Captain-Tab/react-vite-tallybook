@@ -34,12 +34,12 @@ export default defineConfig({
         }
     },
 
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, 'src'), // src 路径
-            // 'utils': path.resolve(__dirname, 'src/utils') // src 路径
-        }
-    },
+    // resolve: {
+    //     alias: {
+    //         '@': path.resolve(__dirname, 'src'), // src 路径
+    //         'utils': path.resolve(__dirname, 'src/utils') // src 路径
+    //     }
+    // },
 
     server: {
         proxy: {
