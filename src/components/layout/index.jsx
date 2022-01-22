@@ -1,13 +1,18 @@
 import React from "react";
 import NavBar from "./NavBar";
-import {useLocation} from "react-router-dom";
+import styled from "@emotion/styled";
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+`
 
 function Layout({ children }) {
     return (
-        <div>
+        <Container>
             { children }
             <NavBar showNav={true}/>
-        </div>
+        </Container>
     );
 }
 export default Layout;

@@ -3,6 +3,11 @@ import {Icon} from "zarm";
 import styled from "@emotion/styled";
 import BillItem from "../../components/view/view/BillItem";
 
+const BillLayout = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
 const BillTop = styled.div`
   font-size: 15px;
   background-color: ${props => props.theme.color};
@@ -43,15 +48,22 @@ const BillTop = styled.div`
   }
 `
 
-const Bill = () => {
+const BillContent = styled.div`
+  height: calc((100% - 100px));
+  overflow: hidden;
+  overflow-y: scroll;
+  background-color: #f5f5f5;
+  padding: 0.26667rem;
+`
 
+const Bill = () => {
     const [list, setList] = useState([
         {
             bills: [
                 {
                     amount: "25.00",
                     date: "1623390740000",
-                    id: 911,
+                    id: 1,
                     pay_type: 1,
                     remark: "",
                     type_id: 1,
@@ -63,7 +75,7 @@ const Bill = () => {
     ]); // 账单列表
 
 
-    return <div>
+    return <BillLayout>
         <BillTop>
             <div className={'sum'}>
                 <span>总支出：<b>¥ 200</b></span>
@@ -79,13 +91,13 @@ const Bill = () => {
             </div>
         </BillTop>
 
-        <div >
+        <BillContent >
             {
                 list.map((item, index) => <BillItem key={index} bill={item} />)
             }
-        </div>
+        </BillContent>
 
 
-    </div>
+    </BillLayout>
 }
 export default Bill

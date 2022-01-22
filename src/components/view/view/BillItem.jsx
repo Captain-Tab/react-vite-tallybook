@@ -3,15 +3,80 @@ import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import { Cell } from 'zarm';
 import CustomIcon from "../../common/CustomIcon";
-import iconMap from "../../../const/iconMap";
-import {navigate} from "hookrouter";
+import constVariable from '../../../const/index'
+import { navigate } from "hookrouter";
+import styled from "@emotion/styled";
 
+const BillCard = styled.div`
+  border-radius: 0.26667rem;
+  overflow: hidden;
+  box-shadow: 0 0 0.10667rem 0 rgb(0 0 0 / 10%);
+  margin-bottom: 0.26667rem;
+`
+
+const BillTime = styled.div`
+    padding: 10px;
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
+    > .date {
+      text-align: center;
+      line-height: 40px;
+    }
+    >.total {
+      > span {
+        > .icon {
+          margin-left: 10px;
+          color: ${props => props.theme.color};
+        }
+        > .amount {
+          margin-left: 5px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+`
+
+const BillCell = styled(Cell)`
+    .icon {
+      color: ${props => props.theme.color};
+    }
+`
 
 
 const BillItem = ({ bill }) => {
     const [income, setIncome] = useState(0); // 收入
     const [expense, setExpense] = useState(0); // 支出
 
+    const billDetail = () => {
+        return (
+            bill && bill.bills.map(item =>
+                <BillCell
+                key={item.id}
+                onClick={() => goToDetail(item)}
+                title={
+                    <>
+                        <CustomIcon
+                            type={item.type_id ? constVariable.iconMap[item.type_id].icon : 1}
+                            className={'icon'}
+                        />
+                        <span>{ item.type_name }</span>
+                    </>
+                }
+                description={<span style={{
+                    color: item.pay_type === 2 ? '#F3000A' : '#37DB5A'
+                }}>
+                    {`${item.pay_type === 1 ? '-' : '+'}${item.amount}`}
+                </span>}
+                help={<div>{dayjs(Number(item.date)).format('HH:mm')} {item.remark ? `| ${item.remark}` : ''}</div>}
+            >
+            </BillCell>)
+        )
+    }
 
     // 当添加账单是，bill.bills 长度变化，触发当日收支总和计算。
     useEffect(() => {
@@ -35,38 +100,22 @@ const BillItem = ({ bill }) => {
         navigate(`/detail?id=${item.id}`)
     };
 
-    return <div >
-        <div >
-            <div>{bill.date}</div>
-            <div >
-        <span>
-          <img src="//s.yezgea02.com/1615953405599/zhi%402x.png" alt='支' />
-            <span>¥{ expense.toFixed(2) }</span>
-        </span>
+    return <BillCard>
+        <BillTime>
+            <div className={'date'}>{bill.date}</div>
+            <div className={'total'}>
                 <span>
-          <img src="//s.yezgea02.com/1615953405599/shou%402x.png" alt="收" />
-          <span>¥{ income.toFixed(2) }</span>
-        </span>
+                    <CustomIcon type="icon-minus-circle"  className={'icon'}/>
+                    <span className={'amount'}>¥{ expense.toFixed(2) }</span>
+                </span>
+                <span>
+                  <CustomIcon type="icon-plus-circle" className={'icon'}/>
+                  <span className={'amount'}>¥{ income.toFixed(2) }</span>
+                </span>
             </div>
-        </div>
-        {
-            bill && bill.bills.map(item => <Cell
-                key={item.id}
-                onClick={() => goToDetail(item)}
-                title={
-                    <>
-                        {/*<CustomIcon*/}
-                        {/*    type={item.type_id ? iconMap[item.type_id].icon : 1}*/}
-                        {/*/>*/}
-                        <span>{ item.type_name }</span>
-                    </>
-                }
-                description={<span style={{ color: item.pay_type === 2 ? 'red' : '#39be77' }}>{`${item.pay_type === 1 ? '-' : '+'}${item.amount}`}</span>}
-                help={<div>{dayjs(Number(item.date)).format('HH:mm')} {item.remark ? `| ${item.remark}` : ''}</div>}
-            >
-            </Cell>)
-        }
-    </div>
+        </BillTime>
+        { billDetail() }
+    </BillCard>
 };
 
 BillItem.propTypes = {
