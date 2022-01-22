@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add react-captcha-code --save
+  /usr/local/bin/node /usr/local/bin/yarn add less-var-to-js --dev
 
 PATH: 
   /usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/tabcaptain/Documents/codework/react-vite-tallybook/node_modules/.bin
@@ -14,8 +14,17 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: connect ECONNREFUSED 116.0.89.227:443
-      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1148:16)
+  Error: http://r.cnpmjs.org/less-var-to-js: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66988:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140662:22)
+      at Request.emit (events.js:375:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141634:10)
+      at Request.emit (events.js:375:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141556:12)
+      at Object.onceWrapper (events.js:481:28)
+      at IncomingMessage.emit (events.js:387:35)
+      at endReadableNT (internal/streams/readable.js:1317:12)
+      at processTicksAndRejections (internal/process/task_queues.js:82:21)
 
 npm manifest: 
   {

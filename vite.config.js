@@ -1,6 +1,14 @@
 import { defineConfig } from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
 import styleImport from 'vite-plugin-style-import'
+import path from 'path';
+// import lessToJS from 'less-vars-to-js';
+// import * as fs from "fs";
+
+// const themeVariables = lessToJS(
+//    fs.readFileSync(path.resolve(__dirname, './src/style/main.less'), 'utf8')
+// );
+
 // https://vitejs.dev/config/
 
 export default defineConfig({
@@ -29,16 +37,17 @@ export default defineConfig({
             less: {
                 // 支持内联 JavaScript
                 javascriptEnabled: true,
+                // modifyVars: themeVariables,
             }
         }
     },
 
-    // resolve: {
-    //     alias: {
-    //         '@': path.resolve(__dirname, 'src'), // src 路径
-    //         'utils': path.resolve(__dirname, 'src/utils') // src 路径
-    //     }
-    // },
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, 'src'), // src 路径
+            // 'utils': path.resolve(__dirname, 'src/utils') // src 路径
+        }
+    },
 
     server: {
         proxy: {

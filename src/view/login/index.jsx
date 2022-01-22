@@ -41,7 +41,7 @@ const BottomPart = styled.div`
         align-items: center;
         p {
           text-decoration: underline;
-          color: #F08830;
+          color: ${props => props.theme.color};
         }
       }
     }
@@ -53,10 +53,6 @@ const Login = () => {
     const [username, setUsername] = useState(''); // 账号
     const [password, setPassword] = useState(''); // 密码
     const [action, setActionType] = useState('register')
-
-    useEffect(()=>{
-        console.log('哇', action)
-    }, [action])
 
     // 提交表单
     const onSubmit = async () => {
@@ -145,6 +141,5 @@ const Login = () => {
         </BottomPart>
     </LoginBody>
 }
-
 
 export default Login
