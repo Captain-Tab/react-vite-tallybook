@@ -6,4 +6,54 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
+  width: 100%;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+p, span {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+ul, ol{
+  list-style: none;
+}
+button, input{
+  font: inherit;
+  border: 0;
+  background-color: transparent;
+  outline: none
+}
+:focus{
+  outline: none;
+}
+h1,h2,h3,h4,h5,h6{
+  font-weight: normal;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+

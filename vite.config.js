@@ -2,13 +2,6 @@ import { defineConfig } from 'vite'
 import reactRefresh from '@vitejs/plugin-react-refresh'
 import styleImport from 'vite-plugin-style-import'
 import path from 'path';
-// import lessToJS from 'less-vars-to-js';
-// import * as fs from "fs";
-
-// const themeVariables = lessToJS(
-//    fs.readFileSync(path.resolve(__dirname, './src/style/main.less'), 'utf8')
-// );
-
 // https://vitejs.dev/config/
 
 export default defineConfig({
@@ -35,9 +28,7 @@ export default defineConfig({
         },
         preprocessorOptions: {
             less: {
-                // 支持内联 JavaScript
-                javascriptEnabled: true,
-                // modifyVars: themeVariables,
+                javascriptEnabled: true,   // 支持内联 JavaScript
             }
         }
     },
