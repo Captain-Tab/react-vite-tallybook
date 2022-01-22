@@ -57,7 +57,7 @@ const BillContent = styled.div`
   height: calc((100% - 100px));
   overflow: hidden;
   overflow-y: scroll;
-  background-color: #f5f5f5;
+  background-color: #f9f9f9;
   padding: 0.26667rem;
 `
 
@@ -98,11 +98,11 @@ const Bill = () => {
     // 请求列表数据
     const refreshData = () => {
         setRefreshing(REFRESH_STATE.loading);
-        if (page != 1) {
+        if (page !== 1) {
             setPage(1);
         } else {
             getBillList();
-        };
+        }
     };
 
     const loadData = () => {
@@ -142,7 +142,7 @@ const Bill = () => {
             </div>
             <div className={'billType'}>
                 <div className={'item'} onClick={toggle}>
-                    <span>类型 <Icon type="icon-down-circle" className={'icon'} /></span>
+                    <span> { currentSelect.name || '全部类型' } <Icon type="icon-down-circle" className={'icon'} /></span>
                 </div>
                 <div className={'item'} onClick={monthToggle}>
                     <span>{ currentTime } <Icon type="icon-down-circle" className={'icon'} /></span>

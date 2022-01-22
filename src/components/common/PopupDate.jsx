@@ -26,7 +26,7 @@ const PopupDate = forwardRef(({ onSelect, mode = 'date' }, ref) => {
                 setShow(false)
             }
         }
-    };
+    }
     return <Popup
         visible={show}
         direction="bottom"

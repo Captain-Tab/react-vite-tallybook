@@ -22,6 +22,8 @@ const BillTime = styled.div`
     align-items: center;
     font-size: 17px;
     font-weight: bold;
+    background-color:#F4F4F4;
+    opacity: 2;
     > .date {
       text-align: center;
       line-height: 40px;
@@ -47,7 +49,6 @@ const BillCell = styled(Cell)`
       margin-right: 2px;
     }
 `
-
 
 const BillItem = ({ bill }) => {
     const [income, setIncome] = useState(0); // 收入
