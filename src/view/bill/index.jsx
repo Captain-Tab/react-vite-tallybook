@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Icon, Pull} from "zarm";
 import dayjs from 'dayjs'
 import styled from "@emotion/styled";
 import BillItem from "../../components/view/view/BillItem";
 import { get } from '/src/plugin/request'
 import {LOAD_STATE, REFRESH_STATE} from "../../const";
+import PopupType from "../../components/common/PopupType";
+import PopupDate from "../../components/common/PopupDate";
 
 const BillLayout = styled.div`
   width: 100%;
@@ -60,6 +62,11 @@ const BillContent = styled.div`
 `
 
 const Bill = () => {
+    const typeRef = useRef(); // 账单类型 ref
+    const monthRef = useRef(); // 月份筛选 ref
+    const [totalExpense, setTotalExpense] = useState(0); // 总支出
+    const [totalIncome, setTotalIncome] = useState(0); // 总收入
+    const [currentSelect, setCurrentSelect] = useState({}); // 当前筛选类型
     const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM')); // 当前筛选时间
     const [page, setPage] = useState(1); // 分页
     const [list, setList] = useState([]); // 账单列表
@@ -67,19 +74,21 @@ const Bill = () => {
     const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal); // 下拉刷新状态
     const [loading, setLoading] = useState(LOAD_STATE.normal); // 上拉加载状态
 
-    useEffect(async () => {
-        await getBillList() // 初始化
-    }, [page])
+    useEffect(() => {
+        getBillList() // 初始化
+        console.log('typeRef', typeRef)
+    }, [page, currentSelect, currentTime])
 
-    // 获取账单方法
     const getBillList = async () => {
-        const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`);
+        const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${currentSelect.id || 'all'}`);
         // 下拉刷新，重制数据
-        if (page === 1) {
+        if (page == 1) {
             setList(data.list);
         } else {
             setList(list.concat(data.list));
         }
+        setTotalExpense(data.totalExpense.toFixed(2));
+        setTotalIncome(data.totalIncome.toFixed(2));
         setTotalPage(data.totalPage);
         // 上滑加载状态
         setLoading(LOAD_STATE.success);
@@ -87,13 +96,13 @@ const Bill = () => {
     }
 
     // 请求列表数据
-    const refreshData = async () => {
+    const refreshData = () => {
         setRefreshing(REFRESH_STATE.loading);
-        if (page !== 1) {
+        if (page != 1) {
             setPage(1);
         } else {
-            await getBillList();
-        }
+            getBillList();
+        };
     };
 
     const loadData = () => {
@@ -103,6 +112,27 @@ const Bill = () => {
         }
     }
 
+    // 添加账单弹窗
+    const toggle = () => {
+        typeRef.current && typeRef.current.show()
+    };
+    // 选择月份弹窗
+    const monthToggle = () => {
+        monthRef.current && monthRef.current.show()
+    };
+
+    // 筛选类型
+    const select = (item) => {
+        setRefreshing(REFRESH_STATE.loading);
+        setPage(1);
+        setCurrentSelect(item)
+    }
+    // 筛选月份
+    const selectMonth = (item) => {
+        setRefreshing(REFRESH_STATE.loading);
+        setPage(1);
+        setCurrentTime(item)
+    }
 
     return <BillLayout>
         <BillTop>
@@ -111,11 +141,11 @@ const Bill = () => {
                 <span >总收入：<b>¥ 500</b></span>
             </div>
             <div className={'billType'}>
-                <div className={'item'}>
+                <div className={'item'} onClick={toggle}>
                     <span>类型 <Icon type="icon-down-circle" className={'icon'} /></span>
                 </div>
-                <div className={'item'}>
-                    <span>2022-06 <Icon type="icon-down-circle" className={'icon'} /></span>
+                <div className={'item'} onClick={monthToggle}>
+                    <span>{ currentTime } <Icon type="icon-down-circle" className={'icon'} /></span>
                 </div>
             </div>
         </BillTop>
@@ -133,7 +163,8 @@ const Bill = () => {
                         state: loading,
                         distance: 200,
                         handler: loadData
-                    }}>
+                    }}
+                >
                     {
                         list.map((item, index) => <BillItem
                             bill={item}
@@ -144,6 +175,8 @@ const Bill = () => {
             }
         </BillContent>
 
+        <PopupType ref={typeRef} onSelect={select} />
+        <PopupDate ref={monthRef} mode="month" onSelect={selectMonth} />
 
     </BillLayout>
 }
