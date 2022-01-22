@@ -1,7 +1,10 @@
-import React, {useState} from 'react'
-import {Icon} from "zarm";
+import React, {useEffect, useState} from 'react'
+import {Icon, Pull} from "zarm";
+import dayjs from 'dayjs'
 import styled from "@emotion/styled";
 import BillItem from "../../components/view/view/BillItem";
+import { get } from '/src/plugin/request'
+import {LOAD_STATE, REFRESH_STATE} from "../../const";
 
 const BillLayout = styled.div`
   width: 100%;
@@ -57,22 +60,48 @@ const BillContent = styled.div`
 `
 
 const Bill = () => {
-    const [list, setList] = useState([
-        {
-            bills: [
-                {
-                    amount: "25.00",
-                    date: "1623390740000",
-                    id: 1,
-                    pay_type: 1,
-                    remark: "",
-                    type_id: 1,
-                    type_name: "餐饮"
-                }
-            ],
-            date: '2021-06-11'
+    const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM')); // 当前筛选时间
+    const [page, setPage] = useState(1); // 分页
+    const [list, setList] = useState([]); // 账单列表
+    const [totalPage, setTotalPage] = useState(0); // 分页总数
+    const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal); // 下拉刷新状态
+    const [loading, setLoading] = useState(LOAD_STATE.normal); // 上拉加载状态
+
+    useEffect(async () => {
+        await getBillList() // 初始化
+    }, [page])
+
+    // 获取账单方法
+    const getBillList = async () => {
+        const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}`);
+        // 下拉刷新，重制数据
+        if (page === 1) {
+            setList(data.list);
+        } else {
+            setList(list.concat(data.list));
         }
-    ]); // 账单列表
+        setTotalPage(data.totalPage);
+        // 上滑加载状态
+        setLoading(LOAD_STATE.success);
+        setRefreshing(REFRESH_STATE.success);
+    }
+
+    // 请求列表数据
+    const refreshData = async () => {
+        setRefreshing(REFRESH_STATE.loading);
+        if (page !== 1) {
+            setPage(1);
+        } else {
+            await getBillList();
+        }
+    };
+
+    const loadData = () => {
+        if (page < totalPage) {
+            setLoading(LOAD_STATE.loading);
+            setPage(page + 1);
+        }
+    }
 
 
     return <BillLayout>
@@ -93,7 +122,25 @@ const Bill = () => {
 
         <BillContent >
             {
-                list.map((item, index) => <BillItem key={index} bill={item} />)
+                list.length ? <Pull
+                    animationDuration={200}
+                    stayTime={400}
+                    refresh={{
+                        state: refreshing,
+                        handler: refreshData
+                    }}
+                    load={{
+                        state: loading,
+                        distance: 200,
+                        handler: loadData
+                    }}>
+                    {
+                        list.map((item, index) => <BillItem
+                            bill={item}
+                            key={index}
+                        />)
+                    }
+                </Pull> : null
             }
         </BillContent>
 

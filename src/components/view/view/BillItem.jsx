@@ -44,6 +44,7 @@ const BillTime = styled.div`
 const BillCell = styled(Cell)`
     .icon {
       color: ${props => props.theme.color};
+      margin-right: 2px;
     }
 `
 
@@ -61,7 +62,7 @@ const BillItem = ({ bill }) => {
                 title={
                     <>
                         <CustomIcon
-                            type={item.type_id ? constVariable.iconMap[item.type_id].icon : 1}
+                            type={item.type_id ? constVariable.ICON_MAP[item.type_id].icon : 1}
                             className={'icon'}
                         />
                         <span>{ item.type_name }</span>
