@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { TabBar } from 'zarm';
 import { navigate } from 'hookrouter'
 import CustomIcon from "../common/CustomIcon";
+import styled from "@emotion/styled";
 
 const NavBar = ({ showNav }) => {
     const [activeKey, setActiveKey] = useState('/');
@@ -13,7 +14,7 @@ const NavBar = ({ showNav }) => {
     }
 
     return (
-        <TabBar visible={showNav}
+        <BarLayout visible={showNav}
                 activeKey={activeKey}
                 onChange={changeTab}>
             <TabBar.Item
@@ -31,7 +32,7 @@ const NavBar = ({ showNav }) => {
                 title="我的"
                 icon={<CustomIcon type="icon-usercenter" />}
             />
-        </TabBar>
+        </BarLayout>
     );
 };
 
@@ -40,3 +41,7 @@ NavBar.propTypes = {
 }
 
 export default NavBar;
+
+const BarLayout = styled(TabBar)`
+    height: 7%;
+`

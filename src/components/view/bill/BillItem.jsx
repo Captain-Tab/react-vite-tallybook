@@ -7,49 +7,6 @@ import constVariable from '../../../const/index'
 import { navigate } from "hookrouter";
 import styled from "@emotion/styled";
 
-const BillCard = styled.div`
-  border-radius: 0.26667rem;
-  overflow: hidden;
-  box-shadow: 0 0 0.10667rem 0 rgb(0 0 0 / 10%);
-  margin-bottom: 0.26667rem;
-`
-
-const BillTime = styled.div`
-    padding: 10px;
-    display: flex;
-    height: 40px;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 17px;
-    font-weight: bold;
-    background-color:#F4F4F4;
-    opacity: 2;
-    .date {
-      text-align: center;
-      line-height: 40px;
-    }
-    >.total {
-      > span {
-        .icon {
-          margin-left: 10px;
-          color: ${props => props.theme.color};
-        }
-        .amount {
-          margin-left: 5px;
-          font-size: 13px;
-        }
-      }
-    }
-  }
-`
-
-const BillCell = styled(Cell)`
-    .icon {
-      color: ${props => props.theme.color};
-      margin-right: 2px;
-    }
-`
-
 const BillItem = ({ bill }) => {
     const [income, setIncome] = useState(0); // 收入
     const [expense, setExpense] = useState(0); // 支出
@@ -125,3 +82,46 @@ BillItem.propTypes = {
 };
 
 export default BillItem;
+
+const BillCard = styled.div`
+  border-radius: 0.26667rem;
+  overflow: hidden;
+  box-shadow: 0 0 0.10667rem 0 rgb(0 0 0 / 10%);
+  margin-bottom: 0.26667rem;
+`
+
+const BillTime = styled.div`
+    padding: 10px;
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: bold;
+    background-color:#F4F4F4;
+    opacity: 2;
+    .date {
+      text-align: center;
+      line-height: 40px;
+    }
+    >.total {
+      > span {
+        .icon {
+          margin-left: 10px;
+          color: ${props => props.theme.color};
+        }
+        .amount {
+          margin-left: 5px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+`
+
+const BillCell = styled(Cell)`
+    .icon {
+      color: ${props => props.theme.color};
+      margin-right: 2px;
+    }
+`

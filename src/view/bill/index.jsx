@@ -10,76 +10,6 @@ import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import PopupAddBill from "../../components/view/bill/PopupAddBill";
 
-const BillLayout = styled.div`
-  width: 100%;
-  height: 100%;
-`
-
-const BillTop = styled.div`
-  font-size: 15px;
-  background-color: ${props => props.theme.color};
-  font-family: PingFangSC-Medium, PingFang SC, serif;
-  opacity: 0.8;
-  color: #fff;
-  height: 100px;
-  padding: 4%;
-  position: relative;
-  .sum {
-    span {
-      font-size: 18px;
-      b {
-        font-family: DINCondensed-Bold,DINCondensed, serif;
-        margin-left: 5px;
-        font-size: 30px;
-      }
-    }
-    span:last-child {
-      margin-left: 15px;
-    }
-  }
-  .billType {
-    margin-top: 10px;
-    display: flex;
-    float: right;
-    align-items: center;
-    .item {
-      background: rgba(0,0,0,.1);
-      border-radius: 0.8rem;
-      padding: 0.08rem 0.21333rem;
-      font-size: .32rem;
-      margin-left: 20px;
-      .icon {
-        font-size: 15px !important;
-      }
-    }
-  }
-`
-
-const BillContent = styled.div`
-  height: calc((100% - 100px));
-  overflow: hidden;
-  overflow-y: scroll;
-  background-color: #f9f9f9;
-  padding: 0.26667rem;
-`
-
-const AddBill = styled.div`
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    z-index: 1000;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1PX solid #e9e9e9;
-    color: ${props => props.theme.color};
-`
-
 const Bill = () => {
     const typeRef = useRef(); // 账单类型 ref
     const monthRef = useRef(); // 月份筛选 ref
@@ -212,3 +142,73 @@ const Bill = () => {
     </BillLayout>
 }
 export default Bill
+
+const BillLayout = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const BillTop = styled.div`
+  font-size: 15px;
+  background-color: ${props => props.theme.color};
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  opacity: 0.8;
+  color: #fff;
+  height: 100px;
+  padding: 4%;
+  position: relative;
+  .sum {
+    span {
+      font-size: 18px;
+      b {
+        font-family: DINCondensed-Bold,DINCondensed, serif;
+        margin-left: 5px;
+        font-size: 30px;
+      }
+    }
+    span:last-child {
+      margin-left: 15px;
+    }
+  }
+  .billType {
+    margin-top: 10px;
+    display: flex;
+    float: right;
+    align-items: center;
+    .item {
+      background: rgba(0,0,0,.1);
+      border-radius: 0.8rem;
+      padding: 0.08rem 0.21333rem;
+      font-size: .32rem;
+      margin-left: 20px;
+      .icon {
+        font-size: 15px !important;
+      }
+    }
+  }
+`
+
+const BillContent = styled.div`
+  height: calc((100% - 100px));
+  overflow: hidden;
+  overflow-y: scroll;
+  background-color: #f9f9f9;
+  padding: 0.26667rem;
+`
+
+const AddBill = styled.div`
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1PX solid #e9e9e9;
+    color: ${props => props.theme.color};
+`

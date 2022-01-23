@@ -5,49 +5,6 @@ import styled from '@emotion/styled';
 import LogoSrc from '/src/assets/img/logo.png';
 import { post } from '/src/plugin/request'
 
-const LoginBody = styled.div`
-    height: 100%;
-    padding: 20% 7% 10% 7%;
-`
-
-const LogoTitle = styled.h2`
-    text-align: center;
-    color: black;
-    font-family: PingFangSC-Medium, PingFang SC, serif;
-    font-size: 17px;
-`
-
-const LogoImg = styled.img`
-    display: flex;
-    width: 50%;
-    margin: 0 auto;
-`
-
-// bottom  css
-const BottomPart = styled.div`
-    margin: 15px;
-    .tipPart {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      .protocol {
-        > label {
-          margin-left: 10px;
-        }
-      }
-      .goLogin{
-        display: flex;
-        align-items: center;
-        p {
-          text-decoration: underline;
-          color: ${props => props.theme.color};
-        }
-      }
-    }
-`
-
-
 const Login = () => {
 
     const [username, setUsername] = useState(''); // 账号
@@ -143,3 +100,45 @@ const Login = () => {
 }
 
 export default Login
+
+const LoginBody = styled.div`
+    height: 100%;
+    padding: 20% 7% 10% 7%;
+`
+
+const LogoTitle = styled.h2`
+    text-align: center;
+    color: black;
+    font-family: PingFangSC-Medium, PingFang SC, serif;
+    font-size: 17px;
+`
+
+const LogoImg = styled.img`
+    display: flex;
+    width: 50%;
+    margin: 0 auto;
+`
+
+// bottom  css
+const BottomPart = styled.div`
+    margin: 15px;
+    .tipPart {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      .protocol {
+        > label {
+          margin-left: 10px;
+        }
+      }
+      .goLogin{
+        display: flex;
+        align-items: center;
+        p {
+          text-decoration: underline;
+          color: ${props => props.theme.color};
+        }
+      }
+    }
+`
