@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Popup, Icon } from 'zarm'
-import { get } from '../../plugin/request'
+import { get } from '../../../plugin/request'
 import styled from "@emotion/styled";
 import cx from 'classnames'
 

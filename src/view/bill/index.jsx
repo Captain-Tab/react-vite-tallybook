@@ -2,11 +2,13 @@ import React, {useEffect, useRef, useState} from 'react'
 import {Icon, Pull} from "zarm";
 import dayjs from 'dayjs'
 import styled from "@emotion/styled";
-import BillItem from "../../components/view/view/BillItem";
+import BillItem from "../../components/view/bill/BillItem";
 import { get } from '/src/plugin/request'
 import {LOAD_STATE, REFRESH_STATE} from "../../const";
-import PopupType from "../../components/common/PopupType";
-import PopupDate from "../../components/common/PopupDate";
+import PopupType from "../../components/view/bill/PopupType";
+import PopupDate from "../../components/view/bill/PopupDate";
+import CustomIcon from "../../components/common/CustomIcon";
+import PopupAddBill from "../../components/view/bill/PopupAddBill";
 
 const BillLayout = styled.div`
   width: 100%;
@@ -61,9 +63,27 @@ const BillContent = styled.div`
   padding: 0.26667rem;
 `
 
+const AddBill = styled.div`
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1PX solid #e9e9e9;
+    color: ${props => props.theme.color};
+`
+
 const Bill = () => {
     const typeRef = useRef(); // 账单类型 ref
     const monthRef = useRef(); // 月份筛选 ref
+    const addRef = useRef(); // 添加账单 ref
     const [totalExpense, setTotalExpense] = useState(0); // 总支出
     const [totalIncome, setTotalIncome] = useState(0); // 总收入
     const [currentSelect, setCurrentSelect] = useState({}); // 当前筛选类型
@@ -82,7 +102,7 @@ const Bill = () => {
     const getBillList = async () => {
         const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${currentSelect.id || 'all'}`);
         // 下拉刷新，重制数据
-        if (page == 1) {
+        if (page === 1) {
             setList(data.list);
         } else {
             setList(list.concat(data.list));
@@ -116,6 +136,12 @@ const Bill = () => {
     const toggle = () => {
         typeRef.current && typeRef.current.show()
     };
+
+    // 添加账单弹窗
+    const addToggle = () => {
+        addRef.current && addRef.current.show()
+    }
+
     // 选择月份弹窗
     const monthToggle = () => {
         monthRef.current && monthRef.current.show()
@@ -137,8 +163,8 @@ const Bill = () => {
     return <BillLayout>
         <BillTop>
             <div className={'sum'}>
-                <span>总支出：<b>¥ 200</b></span>
-                <span >总收入：<b>¥ 500</b></span>
+                <span>总支出：<b>¥ { totalExpense }</b></span>
+                <span >总收入：<b>¥ { totalIncome }</b></span>
             </div>
             <div className={'billType'}>
                 <div className={'item'} onClick={toggle}>
@@ -175,8 +201,13 @@ const Bill = () => {
             }
         </BillContent>
 
+        <AddBill onClick={addToggle}>
+            <CustomIcon type='icon-Note' />
+        </AddBill>
+
         <PopupType ref={typeRef} onSelect={select} />
         <PopupDate ref={monthRef} mode="month" onSelect={selectMonth} />
+        <PopupAddBill ref={addRef} />
 
     </BillLayout>
 }

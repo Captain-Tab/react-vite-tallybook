@@ -7,7 +7,8 @@ import {ThemeProvider} from "@emotion/react";
 
 // 主题变量
 const theme = {
-    color: '#F08830'
+    color: '#F08830',
+    light: '#37DB5A'
 }
 
 function App() {
