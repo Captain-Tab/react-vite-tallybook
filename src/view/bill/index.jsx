@@ -24,7 +24,7 @@ const BillTop = styled.div`
   height: 100px;
   padding: 4%;
   position: relative;
-  > .sum {
+  .sum {
     span {
       font-size: 18px;
       b {
@@ -37,12 +37,12 @@ const BillTop = styled.div`
       margin-left: 15px;
     }
   }
-  > .billType {
+  .billType {
     margin-top: 10px;
     display: flex;
     float: right;
     align-items: center;
-    > .item {
+    .item {
       background: rgba(0,0,0,.1);
       border-radius: 0.8rem;
       padding: 0.08rem 0.21333rem;

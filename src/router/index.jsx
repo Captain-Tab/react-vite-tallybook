@@ -5,6 +5,7 @@ import Statics from "../view/statics";
 import User from "../view/user";
 import Login from "../view/login";
 import Layout from '../components/layout';
+import Detail from "../view/detail";
 
 // wrap the page component
 function withLayout(page){
@@ -16,7 +17,8 @@ const routes = {
     '/' :()=> withLayout(<Bill/> ),
     '/statics': ()=> withLayout(<Statics />),
     '/user' :()=> withLayout(<User/>),
-    '/login': ()=> <Login />
+    '/login': ()=> <Login />,
+    '/detail': ()=> <Detail />
 };
 
 function routeComponents() {

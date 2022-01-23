@@ -26,17 +26,17 @@ const LogoImg = styled.img`
 // bottom  css
 const BottomPart = styled.div`
     margin: 15px;
-    > .tipPart {
+    .tipPart {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 15px;
-      > .protocol {
+      .protocol {
         > label {
           margin-left: 10px;
         }
       }
-      > .goLogin{
+      .goLogin{
         display: flex;
         align-items: center;
         p {

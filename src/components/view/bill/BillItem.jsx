@@ -24,17 +24,17 @@ const BillTime = styled.div`
     font-weight: bold;
     background-color:#F4F4F4;
     opacity: 2;
-    > .date {
+    .date {
       text-align: center;
       line-height: 40px;
     }
     >.total {
       > span {
-        > .icon {
+        .icon {
           margin-left: 10px;
           color: ${props => props.theme.color};
         }
-        > .amount {
+        .amount {
           margin-left: 5px;
           font-size: 13px;
         }
@@ -53,6 +53,11 @@ const BillCell = styled(Cell)`
 const BillItem = ({ bill }) => {
     const [income, setIncome] = useState(0); // 收入
     const [expense, setExpense] = useState(0); // 支出
+
+    // 前往账单详情
+    const goToDetail = (item) => {
+        navigate('/detail', '', { id: item.id })
+    };
 
     const billDetail = () => {
         return (
@@ -96,11 +101,6 @@ const BillItem = ({ bill }) => {
         }, 0);
         setExpense(_expense);
     }, [bill.bills]);
-
-    // 前往账单详情
-    const goToDetail = (item) => {
-        navigate(`/detail?id=${item.id}`)
-    };
 
     return <BillCard>
         <BillTime>

@@ -14,7 +14,7 @@ const PopupContent = styled.div`
   background-color: #fff;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  > .header {
+  .header {
     padding: 0 16px;
     .close {
       font-size: 25px;
@@ -30,7 +30,7 @@ const PopupFilter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  > .type {
+  .type {
     span {
       display: inline-block;
       background: #f5f5f5;
@@ -40,7 +40,7 @@ const PopupFilter = styled.div`
       border-radius: 24px;
       border: 1px solid #f5f5f5;
     }
-    > .expense {
+    .expense {
       margin-right: 6px;
       &.active {
         background-color: #fbf8f0;
@@ -48,7 +48,7 @@ const PopupFilter = styled.div`
         color: ${props => props.theme.color};
       }
     }
-    > .income {
+    .income {
       &.active {
         background-color: #fbf8f0;
         border-color: ${props => props.theme.color};
@@ -56,7 +56,7 @@ const PopupFilter = styled.div`
       }
     }
   }
-  > .time {
+  .time {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -64,7 +64,7 @@ const PopupFilter = styled.div`
     background-color: #f0f0f0;
     border-radius: 20px;
     color: rgba(0, 0, 0, 0.9);
-    > .arrow {
+    .arrow {
       font-size: 12px;
       margin-left: 5px;
     }
@@ -76,12 +76,12 @@ const PopupAmount = styled.div`
   padding-bottom: 12px;
   border-bottom: 1px solid #e9e9e9;
   margin: 0 24px;
-  > .sufix {
+  .sufix {
     font-size: 36px;
     font-weight: bold;
     vertical-align: top;
   }
-  > .amount {
+  .amount {
     font-size: 40px;
     padding-left: 10px;
   }
@@ -95,7 +95,7 @@ const PopupType = styled.div`
   * {
     touch-action: pan-x;
   }
-  > .body {
+  .body {
     display: flex;
     white-space: nowrap;
     >.item {
@@ -104,7 +104,7 @@ const PopupType = styled.div`
       justify-content: center;
       align-items: center;
       padding: 16px 12px 10px 12px;
-      > .picked {
+      .picked {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -113,12 +113,12 @@ const PopupType = styled.div`
         width: 30px;
         height: 30px;
         margin-bottom: 5px;
-        > .iconfont {
+        .iconfont {
           color: rgba(0, 0, 0, 0.5);
           font-size: 20px;
         }
       }
-      > .expense {
+      .expense {
         &.active {
           background-color: ${props => props.theme.color};
           .iconfont {
@@ -126,10 +126,10 @@ const PopupType = styled.div`
           }
         }
       }
-      > .income {
+      .income {
         &.active {
           background-color: ${props => props.theme.color};
-          > .iconfont {
+          .iconfont {
             color: #fff;
           }
         }
@@ -150,19 +150,32 @@ const PopupRemark = styled.div`
   }
 `
 
-const PopupAddBill = forwardRef((props, ref) => {
-    const dateRef = useRef();
-    const [show, setShow] = useState(false); // 内部控制弹窗显示隐藏。
+const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
+    const dateRef = useRef()
+    const id = detail && detail.id // 外部传进来的账单详情 id
+    const [show, setShow] = useState(false);
     const [payType, setPayType] = useState('expense'); // 支出或收入类型
-    const [date, setDate] = useState(new Date()); // 日期
-    const [amount, setAmount] = useState(''); // 账单金额
-    const [currentType, setCurrentType] = useState({}); // 当前选中账单类型
     const [expense, setExpense] = useState([]); // 支出类型数组
     const [income, setIncome] = useState([]); // 收入类型数组
+    const [currentType, setCurrentType] = useState({});
+    const [amount, setAmount] = useState(''); // 账单价格
     const [remark, setRemark] = useState(''); // 备注
     const [showRemark, setShowRemark] = useState(false); // 备注输入框
+    const [date, setDate] = useState(new Date()); // 日期
 
-    // 通过 forwardRef 拿到外部传入的 ref，并添加属性，使得父组件可以通过 ref 控制子组件。
+    useEffect(() => {
+        if (detail.id) {
+            setPayType(detail.pay_type === 1 ? 'expense' : 'income')
+            setCurrentType({
+                id: detail.type_id,
+                name: detail.type_name
+            })
+            setRemark(detail.remark)
+            setAmount(detail.amount)
+            setDate(dayjs(Number(detail.date)).$d)
+        }
+    }, [detail])
+
     if (ref) {
         ref.current = {
             show: () => {
@@ -180,22 +193,41 @@ const PopupAddBill = forwardRef((props, ref) => {
         const _income = list.filter(i => i.type === 2); // 收入类型
         setExpense(_expense);
         setIncome(_income);
-        setCurrentType(_expense[0]); // 新建账单，类型默认是支出类型数组的第一项
-    }, [])
+        // 没有 id 的情况下，说明是新建账单。
+        if (!id) {
+            setCurrentType(_expense[0]);
+        };
+    }, []);
 
     // 切换收入还是支出
     const changeType = (type) => {
         setPayType(type);
+        // 切换之后，默认给相应类型的第一个值
+        if (type === 'expense') {
+            setCurrentType(expense[0]);
+        } else {
+            setCurrentType(income[0]);
+        }
     };
+
+    // 日期弹窗
+    const handleDatePop = () => {
+        dateRef.current && dateRef.current.show()
+    }
 
     // 日期选择回调
     const selectDate = (val) => {
-        setDate(val);
+        setDate(val)
+    }
+
+    // 选择账单类型
+    const choseType = (item) => {
+        setCurrentType(item)
     }
 
     // 监听输入框改变值
     const handleMoney = async (value) => {
-        console.log('value', value)
+        console.log('cal', value)
         value = String(value)
         // 点击是删除按钮时
         if (value === 'delete') {
@@ -205,10 +237,7 @@ const PopupAddBill = forwardRef((props, ref) => {
         }
         // 点击确认按钮时
         if (value === 'ok') {
-            if (value === 'ok') {
-                await addBill()
-                return
-            }
+            await addBill()
             return
         }
         // 当输入的值为 '.' 且 已经存在 '.'，则不让其继续字符串相加。
@@ -233,15 +262,22 @@ const PopupAddBill = forwardRef((props, ref) => {
             pay_type: payType === 'expense' ? 1 : 2,
             remark: remark || ''
         }
-        const result = await post('/api/bill/add', params);
-        setAmount('');
-        setPayType('expense');
-        setCurrentType(expense[0]);
-        setDate(new Date());
-        setRemark('');
-        Toast.show('添加成功');
+        if (id) {
+            params.id = id;
+            // 如果有 id 需要调用详情更新接口
+            await post('/api/bill/update', params);
+            Toast.show('修改成功');
+        } else {
+            await post('/api/bill/add', params);
+            setAmount('');
+            setPayType('expense');
+            setCurrentType(expense[0]);
+            setDate(new Date());
+            setRemark('');
+            Toast.show('添加成功');
+        }
         setShow(false);
-        if (props.onReload) props.onReload();
+        if (onReload) onReload();
     }
 
     return <Popup
