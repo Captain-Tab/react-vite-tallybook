@@ -18,19 +18,15 @@ const Statics = () => {
     const [totalIncome, setTotalIncome] = useState(0); // 总收入
     const [expenseData, setExpenseData] = useState([]); // 支出数据
     const [incomeData, setIncomeData] = useState([]); // 收入数据
-    const [pieType, setPieType] = useState('expense'); // 饼图的「收入」和「支出」控制
 
-    useEffect( () => {
-        getData();
+    useEffect( async() => {
+        await getData();
         return () => {
             // 每次组件卸载的时候，需要释放图表实例。clear 只是将其清空不会释放。
-            // proportionChart.dispose();
+            proportionChart.dispose();
         };
     }, [currentMonth]);
 
-    // useEffect(() => {
-    //     showContent()
-    // }, [totalType])
 
     // 获取数据详情
     const getData = async () => {
@@ -46,7 +42,7 @@ const Statics = () => {
         setIncomeData(income_data);
 
         // 绘制饼图
-        // setPieChart(pieType === 'expense' ? expense_data : income_data);
+        setPieChart(totalType === 'expense' ? expense_data : income_data);
     };
 
     // 月份弹窗开关
@@ -61,14 +57,8 @@ const Statics = () => {
     // 切换收支构成类型
     const changeTotalType = (type) => {
         setTotalType(type);
+        setPieChart(type === 'expense' ? expenseData : incomeData);
     };
-
-    // 切换饼图收支类型
-    const changePieType = (type) => {
-        setPieType(type);
-        // 重绘饼图
-        // setPieChart(type === 'expense' ? expenseData : incomeData);
-    }
 
     const progressList = () => {
         const listData = totalType === 'expense'? expenseData : incomeData
@@ -99,41 +89,42 @@ const Statics = () => {
     }
 
     // 绘制饼图方法
-    // const setPieChart = (data) => {
-    //     if (echarts) {
-    //         proportionChart = echarts.init(document.getElementById('proportion'));
-    //         proportionChart.setOption({
-    //             tooltip: {
-    //                 trigger: 'item',
-    //                 formatter: '{a} <br/>{b} : {c} ({d}%)'
-    //             },
-    //             // 图例
-    //             legend: {
-    //                 data: data.map(item => item.type_name)
-    //             },
-    //             series: [
-    //                 {
-    //                     name: '支出',
-    //                     type: 'pie',
-    //                     radius: '55%',
-    //                     data: data.map(item => {
-    //                         return {
-    //                             value: item.number,
-    //                             name: item.type_name
-    //                         }
-    //                     }),
-    //                     emphasis: {
-    //                         itemStyle: {
-    //                             shadowBlur: 10,
-    //                             shadowOffsetX: 0,
-    //                             shadowColor: 'rgba(0, 0, 0, 0.5)'
-    //                         }
-    //                     }
-    //                 }
-    //             ]
-    //         })
-    //     };
-    // };
+    const setPieChart = (data) => {
+        if (echarts) {
+            proportionChart = echarts.init(document.getElementById('proportion'));
+            proportionChart.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                },
+                // 图例
+                legend: {
+                    data: data.map(item => item.type_name)
+                },
+                series: [
+                    {
+                        name: '支出',
+                        type: 'pie',
+                        radius: '55%',
+                        data: data.map(item => {
+                            return {
+                                value: item.number,
+                                name: item.type_name
+                            }
+                        }),
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            })
+        };
+    };
+
 
     return <StaticsContent>
         <StaticsSum>
@@ -159,9 +150,10 @@ const Statics = () => {
 
         <StaticsChart>
             <ProgressArea>
-                <h3 className={'title'}>账单组成</h3>
                 { progressList() }
             </ProgressArea>
+
+            <PiechartArea id={'proportion'} />
 
         </StaticsChart>
 
@@ -289,4 +281,34 @@ const ProgressArea = styled.div`
         width: 50%;
       }
     }
+`
+
+const PiechartArea = styled.div`
+  background-color: #fff;
+  padding: 12px;
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    .title {
+      font-size: 18px;
+      color: rgba(0, 0, 0, .9);
+    }
+    .tab {
+      span {
+        display: inline-block;
+        width: 40px;
+        height: 24px;
+        background-color: #f5f5f5;
+        text-align: center;
+        line-height: 24px;
+        margin-left: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
 `
