@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Cell, Icon, Progress} from 'zarm';
+import {Icon, Progress} from 'zarm';
 import cx from 'classnames';
 import dayjs from 'dayjs';
 import { get } from '../../plugin/request'
