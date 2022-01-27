@@ -32,15 +32,15 @@ const User = () => {
             <Cell
                 hasArrow
                 title="用户信息修改"
-                icon={<CustomIcon type="icon-edit" />}/>
+                icon={<CustomIcon type="icon-edit" className={'icon'} />}/>
             <Cell
                 hasArrow
                 title="充值密码"
-                icon={<CustomIcon type="icon-reset" />}/>
+                icon={<CustomIcon type="icon-password" className={'icon'} />}/>
             <Cell
                 hasArrow
                 title="了解更多"
-                icon={<CustomIcon type="icon-contactus" />}/>
+                icon={<CustomIcon type="icon-contactus" className={'icon'} />}/>
         </UserPanel>
     </UserContent>
 }
@@ -87,7 +87,7 @@ const UserHeader = styled.div`
 const UserPanel = styled.div`
   top: 150px;
   position: absolute;
-  height: 300px;
+  height: 200px;
   width: 90%;
   left: 50%;
   transform: translateX(-50%);
@@ -95,4 +95,10 @@ const UserPanel = styled.div`
   box-shadow: 0.08rem 0.05333rem 0.53333rem 0.26667rem rgb(0 0 0 / 10%);
   border-radius: 0.26667rem;;
   padding: 10px;
+  .icon {
+    color: ${props => props.theme.color}
+  }
+  .za-cell::after {
+    display: none;
+  }
 `
