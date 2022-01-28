@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { get } from '../../plugin/request'
 import {Cell} from "zarm";
 import CustomIcon from "../../components/common/CustomIcon";
+import {navigate} from "hookrouter";
 
 const User = () => {
     const [user, setUser] = useState({});
@@ -17,6 +18,17 @@ const User = () => {
         setUser(data);
     };
 
+    // 账号退出
+    const logout = () => {
+        localStorage.removeItem('token')
+        navigate('/login')
+    }
+
+    // 路由跳转
+    const routeRoaming = (path) => {
+        navigate(`/user/` + path)
+    }
+
     return <UserContent>
         <UserHeader>
             <div className={'avatar'}>
@@ -27,21 +39,24 @@ const User = () => {
                 <p className={'signature'}>个性签名: { user.signature || '' }</p>
             </div>
         </UserHeader>
-
         <UserPanel>
             <Cell
                 hasArrow
                 title="用户信息修改"
+                onClick={() => routeRoaming('edit')}
                 icon={<CustomIcon type="icon-edit" className={'icon'} />}/>
             <Cell
                 hasArrow
-                title="充值密码"
+                title="重置密码"
+                onClick={() => routeRoaming('reset')}
                 icon={<CustomIcon type="icon-password" className={'icon'} />}/>
             <Cell
                 hasArrow
                 title="了解更多"
+                onClick={() => routeRoaming('about')}
                 icon={<CustomIcon type="icon-contactus" className={'icon'} />}/>
         </UserPanel>
+        <LogOut onClick={logout}>退出账号</LogOut>
     </UserContent>
 }
 
@@ -101,4 +116,18 @@ const UserPanel = styled.div`
   .za-cell::after {
     display: none;
   }
+`
+
+const LogOut = styled.div`
+  background-color: ${props => props.theme.light};
+  position: absolute;
+  color: #FFF;
+  font-family: PingFangSC-Medium, PingFang SC, serif;
+  bottom: 2%;
+  padding: 3%;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
 `

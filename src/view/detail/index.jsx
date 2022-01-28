@@ -39,8 +39,6 @@ const Detail = () => {
     }
 
     return <DetailContent>
-        <TopBar title='账单详情' />
-
         <DetailCard>
             <div className={'type'}>
                 {/* 通过 pay_type 属性，判断是收入或指出，给出不同的颜色*/}

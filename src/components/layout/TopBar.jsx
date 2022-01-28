@@ -3,20 +3,23 @@ import PropTypes from 'prop-types';
 import { NavBar, Icon } from 'zarm';
 import styled from "@emotion/styled";
 
-const Header = ({ title = '' }) => {
+const Header = ({ children, title = '' }) => {
+    return <TopBarWrapper>
+        <TopBar>
+            <div className={'block'}>
+                <NavBar
+                    className={'top'}
+                    left={
+                        <Icon type="icon-arrow-left-circle"
+                              theme="primary"
+                              onClick={() => history.back()}/>}
+                    title={title}
+                />
+            </div>
+        </TopBar>
+        {children}
+    </TopBarWrapper>
 
-    return <TopBar>
-        <div className={'block'}>
-            <NavBar
-                className={'top'}
-                left={
-                <Icon type="icon-arrow-left-circle"
-                      theme="primary"
-                      onClick={() => history.back()}/>}
-                title={title}
-            />
-        </div>
-    </TopBar>
 };
 
 Header.propTypes = {
@@ -24,6 +27,11 @@ Header.propTypes = {
 };
 
 export default Header;
+
+const TopBarWrapper = styled.div`
+  height: 100%;
+  width: 100%;
+`
 
 const TopBar = styled.div`
   border-bottom: 1px solid #e9e9e9;
