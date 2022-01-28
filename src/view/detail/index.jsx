@@ -79,7 +79,6 @@ const DetailContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5;
 `
 
 const DetailCard = styled.div`

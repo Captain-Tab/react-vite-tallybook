@@ -17,7 +17,9 @@ const Header = ({ children, title = '' }) => {
                 />
             </div>
         </TopBar>
-        {children}
+        <DisplayContent>
+            {children}
+        </DisplayContent>
     </TopBarWrapper>
 
 };
@@ -29,7 +31,7 @@ Header.propTypes = {
 export default Header;
 
 const TopBarWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 48px);
   width: 100%;
 `
 
@@ -57,4 +59,9 @@ const TopBar = styled.div`
       font-size: 20px;
     }
   }
+`
+
+const DisplayContent = styled.div`
+  height: 100%;
+  background-color: #f5f5f5;
 `
