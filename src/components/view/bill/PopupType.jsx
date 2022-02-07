@@ -5,68 +5,6 @@ import { get } from '../../../plugin/request'
 import styled from "@emotion/styled";
 import cx from 'classnames'
 
-const PopupTypeContainer = styled.div`
-  height: 500px;
-  background-color: #f5f5f5;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px; 
-`
-
-const ContainerHeader = styled.div`
-  position: sticky;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  width: 100%;
-  height: 56px;
-  text-align: center;
-  font-size: 14px;
-  line-height: 56px;
-  color: rgba(0, 0, 0, 0.9);
-  background-color: #fff;
-  .cross {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    font-size: 25px;
-    transform: translateY(-50%);
-    color: rgba(0, 0, 0, 0.6);
-  }
-`
-
-const ContainerContent= styled.div`
-  padding: 20px;
-  .all {
-    display: inline-block;
-    padding: 12px 20px;
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.9);
-    background-color: #fff;
-  }
-  .title {
-    color: rgba(0, 0, 0, 0.9);
-    margin: 10px 0;
-    font-size: 16px;
-  }
-  .expense-wrap, .income-wrap {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    p {
-      width: calc((100% - 20px) / 3);
-      text-align: center;
-      padding: 12px 0;
-      margin: 0 10px 15px 0;
-      background-color: #fff;
-      font-size: 16px;
-    }
-  }
-  .active {
-    background-color: ${props => props.theme.color} !important;
-    color: #fff;
-  }
-`
-
 const PopupType = forwardRef(({ onSelect }, ref) => {
     const [show, setShow] = useState(false);
     const [active, setActive] = useState('all');
@@ -147,3 +85,66 @@ PopupType.propTypes = {
 }
 
 export default PopupType;
+
+
+const PopupTypeContainer = styled.div`
+  height: 500px;
+  background-color: #f5f5f5;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px; 
+`
+
+const ContainerHeader = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 56px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 56px;
+  color: rgba(0, 0, 0, 0.9);
+  background-color: #fff;
+  .cross {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    font-size: 25px;
+    transform: translateY(-50%);
+    color: rgba(0, 0, 0, 0.6);
+  }
+`
+
+const ContainerContent= styled.div`
+  padding: 20px;
+  .all {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #fff;
+  }
+  .title {
+    color: rgba(0, 0, 0, 0.9);
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  .expense-wrap, .income-wrap {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    p {
+      width: calc((100% - 20px) / 3);
+      text-align: center;
+      padding: 12px 0;
+      margin: 0 10px 15px 0;
+      background-color: #fff;
+      font-size: 16px;
+    }
+  }
+  .active {
+    background-color: ${props => props.theme.color} !important;
+    color: #fff;
+  }
+`

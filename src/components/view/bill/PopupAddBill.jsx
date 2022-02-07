@@ -9,147 +9,6 @@ import PopupDate from "./PopupDate";
 import constVariable from "../../../const";
 import styled from "@emotion/styled";
 
-const PopupContent = styled.div`
-  padding-top: 12px;
-  background-color: #fff;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  .header {
-    padding: 0 16px;
-    .close {
-      font-size: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
-  }
-`
-
-const PopupFilter = styled.div`
-  padding: 12px 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  .type {
-    span {
-      display: inline-block;
-      background: #f5f5f5;
-      color: rgba(0, 0, 0, 0.5);
-      padding: 4px 12px;
-      font-size: 12px;
-      border-radius: 24px;
-      border: 1px solid #f5f5f5;
-    }
-    .expense {
-      margin-right: 6px;
-      &.active {
-        background-color: #fbf8f0;
-        border-color: ${props => props.theme.color};
-        color: ${props => props.theme.color};
-      }
-    }
-    .income {
-      &.active {
-        background-color: #fbf8f0;
-        border-color: ${props => props.theme.color};
-        color: ${props => props.theme.color};
-      }
-    }
-  }
-  .time {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4px 12px;
-    background-color: #f0f0f0;
-    border-radius: 20px;
-    color: rgba(0, 0, 0, 0.9);
-    .arrow {
-      font-size: 12px;
-      margin-left: 5px;
-    }
-  }
-  }
-`
-
-const PopupAmount = styled.div`
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e9e9e9;
-  margin: 0 24px;
-  .sufix {
-    font-size: 36px;
-    font-weight: bold;
-    vertical-align: top;
-  }
-  .amount {
-    font-size: 40px;
-    padding-left: 10px;
-  }
-`
-
-const PopupType = styled.div`
-  display: flex;
-  overflow-x: auto;
-  margin: 0 24px;
-  margin-bottom: 20px;
-  * {
-    touch-action: pan-x;
-  }
-  .body {
-    display: flex;
-    white-space: nowrap;
-    >.item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 16px 12px 10px 12px;
-      .picked {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #f5f5f5;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        margin-bottom: 5px;
-        .iconfont {
-          color: rgba(0, 0, 0, 0.5);
-          font-size: 20px;
-        }
-      }
-      .expense {
-        &.active {
-          background-color: ${props => props.theme.color};
-          .iconfont {
-            color: #fff;
-          }
-        }
-      }
-      .income {
-        &.active {
-          background-color: ${props => props.theme.color};
-          .iconfont {
-            color: #fff;
-          }
-        }
-      }
-    }
-  }
-`
-
-const PopupRemark = styled.div`
-  padding: 0 24px;
-  padding-bottom: 12px;
-  color: ${props => props.theme.light};
-  :global {
-    .za-input--textarea {
-      border: 1px solid #e9e9e9;
-      padding:  10px;
-    }
-  }
-`
-
 const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     const dateRef = useRef()
     const id = detail && detail.id // 外部传进来的账单详情 id
@@ -363,3 +222,141 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
 
 export default PopupAddBill
 
+const PopupContent = styled.div`
+  padding-top: 12px;
+  background-color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  .header {
+    padding: 0 16px;
+    .close {
+      font-size: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+`
+
+const PopupFilter = styled.div`
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .type {
+    span {
+      display: inline-block;
+      background: #f5f5f5;
+      color: rgba(0, 0, 0, 0.5);
+      padding: 4px 12px;
+      font-size: 12px;
+      border-radius: 24px;
+      border: 1px solid #f5f5f5;
+    }
+    .expense {
+      margin-right: 6px;
+      &.active {
+        background-color: #fbf8f0;
+        border-color: ${props => props.theme.color};
+        color: ${props => props.theme.color};
+      }
+    }
+    .income {
+      &.active {
+        background-color: #fbf8f0;
+        border-color: ${props => props.theme.color};
+        color: ${props => props.theme.color};
+      }
+    }
+  }
+  .time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 12px;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    color: rgba(0, 0, 0, 0.9);
+    .arrow {
+      font-size: 12px;
+      margin-left: 5px;
+    }
+  }
+  }
+`
+
+const PopupAmount = styled.div`
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e9e9e9;
+  margin: 0 24px;
+  .sufix {
+    font-size: 36px;
+    font-weight: bold;
+    vertical-align: top;
+  }
+  .amount {
+    font-size: 40px;
+    padding-left: 10px;
+  }
+`
+
+const PopupType = styled.div`
+  display: flex;
+  overflow-x: auto;
+  margin: 0 24px 20px 0;
+  * {
+    touch-action: pan-x;
+  }
+  .body {
+    display: flex;
+    white-space: nowrap;
+    >.item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 12px 10px 12px;
+      .picked {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f5f5f5;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-bottom: 5px;
+        .iconfont {
+          color: rgba(0, 0, 0, 0.5);
+          font-size: 20px;
+        }
+      }
+      .expense {
+        &.active {
+          background-color: ${props => props.theme.color};
+          .iconfont {
+            color: #fff;
+          }
+        }
+      }
+      .income {
+        &.active {
+          background-color: ${props => props.theme.color};
+          .iconfont {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+`
+
+const PopupRemark = styled.div`
+  padding: 0 24px 12px 24px;
+  color: ${props => props.theme.light};
+  :global {
+    .za-input--textarea {
+      border: 1px solid #e9e9e9;
+      padding:  10px;
+    }
+  }
+`

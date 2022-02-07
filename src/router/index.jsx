@@ -28,7 +28,7 @@ const routes = {
     '/statics': ()=> withLayout(<Statics />),
     '/user' :()=> withLayout(<User/>),
     '/user/about': ()=> withTopBar(<About />, '了解更多'),
-    '/user/edit': ()=> withTopBar(<EditUser />, '用户信息修改'),
+    '/user/edit': ()=> withTopBar(<EditUser />, '个人信息'),
     '/user/reset': ()=> withTopBar(<Reset/>, '重置密码'),
     '/detail': ()=> withTopBar(<Detail />, '账单详情'),
 };

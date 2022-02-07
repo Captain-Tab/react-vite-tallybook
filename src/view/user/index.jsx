@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from "@emotion/styled";
 import { get } from '../../plugin/request'
 import { Cell } from "zarm";

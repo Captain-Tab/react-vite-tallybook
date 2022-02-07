@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from "@emotion/styled";
-import {Button, Cell, Input, Toast} from "zarm";
+import { Cell, Input, Toast} from "zarm";
 import { createForm } from "rc-form";
-import {post} from "../../../plugin/request";
+import { post } from "../../../plugin/request";
 
 const Reset = (props) => {
     // Account 通过 createForm 高阶组件包裹之后，可以在 props 中获取到 form 属性

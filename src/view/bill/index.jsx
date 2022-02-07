@@ -26,7 +26,6 @@ const Bill = () => {
 
     useEffect(() => {
         getBillList() // 初始化
-        console.log('typeRef', typeRef)
     }, [page, currentSelect, currentTime])
 
     const getBillList = async () => {
