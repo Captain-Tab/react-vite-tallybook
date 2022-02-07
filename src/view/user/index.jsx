@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import styled from "@emotion/styled";
 import { get } from '../../plugin/request'
-import {Cell} from "zarm";
+import { Cell } from "zarm";
 import CustomIcon from "../../components/common/CustomIcon";
-import {navigate} from "hookrouter";
+import { navigate } from "hookrouter";
 
 const User = () => {
     const [user, setUser] = useState({});
