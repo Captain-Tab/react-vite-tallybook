@@ -10,7 +10,6 @@ import {navigate} from "hookrouter";
 
 const EditUser = () => {
     const inputRef = useRef(); // 输入类型 ref
-    const token = localStorage.getItem('token'); // 登录令牌
     const [label, setLabel] = useState({
         name: '',
         value: ''
@@ -50,7 +49,6 @@ const EditUser = () => {
             data: formData,
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': token
             }
         }).then(res => {
             // 返回图片地址
