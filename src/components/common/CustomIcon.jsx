@@ -1,3 +1,3 @@
 import { Icon } from 'zarm';
 
-export default Icon.createFromIconfont('//at.alicdn.com/t/font_3155979_8wsasgsxmov.js');
+export default Icon.createFromIconfont('//at.alicdn.com/t/font_3155979_bie5bvhqbvo.js');

@@ -9,6 +9,7 @@ import PopupType from "../../components/view/bill/PopupType";
 import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import PopupAddBill from "../../components/view/bill/PopupAddBill";
+import EmptyPanel from "../../components/common/EmptyPanel";
 
 const Bill = () => {
     const typeRef = useRef(); // 账单类型 ref
@@ -126,7 +127,7 @@ const Bill = () => {
                             key={index}
                         />)
                     }
-                </Pull> : null
+                </Pull> : <EmptyPanel />
             }
         </BillContent>
 

@@ -7,6 +7,7 @@ import styled from "@emotion/styled";
 import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import constVariable from "../../const";
+import EmptyPanel from "../../components/common/EmptyPanel";
 
 let proportionChart = null;
 
@@ -14,6 +15,7 @@ const Statics = () => {
     const monthRef = useRef();
     const [currentMonth, setCurrentMonth] = useState(dayjs().format('YYYY-MM')); // 当前月份
     const [totalType, setTotalType] = useState('expense'); // 收入或支出类型
+    const [validData, setValidData] = useState(true)
     const [totalExpense, setTotalExpense] = useState(0); // 总支出
     const [totalIncome, setTotalIncome] = useState(0); // 总收入
     const [expenseData, setExpenseData] = useState([]); // 支出数据
@@ -26,6 +28,13 @@ const Statics = () => {
             proportionChart.dispose();
         };
     }, [currentMonth]);
+
+    useEffect(()=> {
+        console.log('totalType', totalType)
+        const data = totalType === 'expense' ?  totalExpense : totalIncome;
+        console.log('data', data)
+        setValidData(data > 0 )
+    }, [totalType, totalExpense, totalIncome])
 
 
     // 获取数据详情
@@ -125,7 +134,6 @@ const Statics = () => {
         };
     };
 
-
     return <StaticsContent>
         <StaticsSum>
             <div className={'time'} onClick={monthShow}>
@@ -148,12 +156,18 @@ const Statics = () => {
             </div>
         </StaticsSum>
 
-        <StaticsChart>
-            <ProgressArea>
-                { progressList() }
-            </ProgressArea>
+        <StaticsChart show={validData}>
+            <div className={'charArea'}>
+                <ProgressArea>
+                    { progressList() }
+                </ProgressArea>
 
-            <PiechartArea id={'proportion'} />
+                <PiechartArea id={'proportion'} />
+            </div>
+
+            <div className={'empty'}>
+                <EmptyPanel />
+            </div>
 
         </StaticsChart>
 
@@ -250,6 +264,14 @@ const StaticsChart = styled.div`
     height: calc(93% - 110px);
     background-color: #fff;
     overflow-y: scroll;
+    .charArea {
+      display: ${props => props.show ? 'block': 'none'};
+    }
+    .empty {
+      display: ${props => props.show ? 'none': 'block'};
+      width: 100%;
+      height: 100%;
+    }
 `
 
 const ProgressArea = styled.div`

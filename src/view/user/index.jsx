@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from "@emotion/styled";
 import { get } from '../../plugin/request'
-import { Cell } from "zarm";
+import {Cell, Toast} from "zarm";
 import CustomIcon from "../../components/common/CustomIcon";
 import { navigate } from "hookrouter";
 
@@ -20,8 +20,14 @@ const User = () => {
 
     // 账号退出
     const logout = () => {
-        localStorage.removeItem('token')
-        navigate('/login')
+        Toast.show({
+            content: '退出账号成功!',
+            stayTime: 2000,
+            afterClose: () => {
+                localStorage.removeItem('token')
+                navigate('/login')
+            }
+        })
     }
 
     // 路由跳转
@@ -35,7 +41,7 @@ const User = () => {
                 <img src={user.avatar || ''} alt='avatar' />
             </div>
             <div className={'userInfo'}>
-                <p className={'name'}>用户: { user.userInfo || '' }</p>
+                <p className={'name'}>用户: { user.username || '' }</p>
                 <p className={'signature'}>个性签名: { user.signature || '' }</p>
             </div>
         </UserHeader>

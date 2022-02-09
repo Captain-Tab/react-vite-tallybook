@@ -1,24 +1,21 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import CustomIcon from "../../components/common/CustomIcon";
-import {Button, Cell, Checkbox, Input, Toast} from "zarm";
+import { Button, Cell, Checkbox, Input, Toast } from "zarm";
 import styled from '@emotion/styled';
 import LogoSrc from '/src/assets/img/logo.png';
 import { post } from '/src/plugin/request'
+import {navigate} from "hookrouter";
 
 const Login = () => {
 
     const [username, setUsername] = useState(''); // 账号
     const [password, setPassword] = useState(''); // 密码
-    const [action, setActionType] = useState('register')
+    const [action, setActionType] = useState('login')
 
     // 提交表单
     const onSubmit = async () => {
-        if (!username) {
-            Toast.show('请输入账号')
-            return
-        }
-        if (!password) {
-            Toast.show('请输入密码')
+        if (!username || !password) {
+            Toast.show('请输入账号和密码')
             return
         }
         try {
@@ -31,6 +28,13 @@ const Login = () => {
                 });
                 // 将 token 写入 localStorage
                 localStorage.setItem('token', data.token);
+                Toast.show({
+                    content: '登录成功!',
+                    stayTime: 2000,
+                    afterClose: () => {
+                        navigate('/')
+                    }
+                })
             } else {
                 await post('/api/user/register', {
                     username,
@@ -41,7 +45,7 @@ const Login = () => {
                 setActionType('login');
             }
         } catch (error) {
-            Toast.show('系统错误');
+            Toast.show(error);
         }
 
     };
@@ -111,6 +115,7 @@ const LogoTitle = styled.h2`
     color: black;
     font-family: PingFangSC-Medium, PingFang SC, serif;
     font-size: 17px;
+    margin: 20px 0;
 `
 
 const LogoImg = styled.img`

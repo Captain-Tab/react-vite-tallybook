@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const About = () => {
     return <AboutContent>
-        <p>暂无更多信息...</p>
+        <p>就不告诉你...</p>
     </AboutContent>
 }
 

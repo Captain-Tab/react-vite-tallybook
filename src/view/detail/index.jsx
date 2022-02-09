@@ -111,7 +111,7 @@ const DetailCard = styled.div`
   }
   .info {
     width: 75%;
-    font-size: 15px;
+    font-size: 13px;
     text-align: center;
     margin-bottom: 20px;
     .time {
