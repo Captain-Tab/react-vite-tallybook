@@ -117,7 +117,9 @@ const ContainerHeader = styled.div`
 `
 
 const ContainerContent= styled.div`
+  height: calc(500px - 56px);
   padding: 20px;
+  overflow: scroll;
   .all {
     display: inline-block;
     padding: 12px 20px;

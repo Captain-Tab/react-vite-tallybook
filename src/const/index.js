@@ -31,7 +31,19 @@ const ICON_MAP = {
     },
     11: {
         icon: 'icon-house'
-    }
+    },
+    12: {
+        icon: 'icon-salary'
+    },
+    13: {
+        icon: 'icon-transaction'
+    },
+    14: {
+        icon: 'icon-red-packet'
+    },
+    15: {
+        icon: 'icon-refund'
+    },
 
     // 4: {
     //     icon: 'icon-capsule-fill'

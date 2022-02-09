@@ -50,7 +50,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
         const { data: { list } } = await get('/api/type/list');
         const _expense = list.filter(i => i.type === 1); // 支出类型
         const _income = list.filter(i => i.type === 2); // 收入类型
-        setExpense(_expense);
+        setExpense(_expense)
         setIncome(_income);
         // 没有 id 的情况下，说明是新建账单。
         if (!id) {
@@ -61,7 +61,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     // 切换收入还是支出
     const changeType = (type) => {
         setPayType(type);
-        // 切换之后，默认给相应类型的第一个值
+        // // 切换之后，默认给相应类型的第一个值
         if (type === 'expense') {
             setCurrentType(expense[0]);
         } else {
@@ -79,10 +79,6 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
         setDate(val)
     }
 
-    // 选择账单类型
-    const choseType = (item) => {
-        setCurrentType(item)
-    }
 
     // 监听输入框改变值
     const handleMoney = async (value) => {
@@ -187,6 +183,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
                                         expense: payType === 'expense',
                                         income: payType === 'income',
                                         active: currentType.id === item.id})}>
+
                                         <CustomIcon
                                             className={'iconfont'}
                                             type={constVariable.ICON_MAP[item.id].icon} />

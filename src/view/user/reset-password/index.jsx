@@ -49,7 +49,7 @@ const Reset = (props) => {
                     <Input
                         clearable
                         type="text"
-                        placeholder="请再此输入新密码确认"
+                        placeholder="请再此输入新密码"
                         {...getFieldProps('newpass2', { rules: [{ required: true }] })}
                     />
                 </Cell>
