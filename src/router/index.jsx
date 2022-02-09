@@ -1,4 +1,4 @@
-import {useRoutes} from 'hookrouter';
+import { useRoutes } from 'hookrouter';
 import React from "react";
 import Bill from "../view/bill";
 import Statics from "../view/statics";

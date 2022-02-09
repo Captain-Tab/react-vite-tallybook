@@ -8,10 +8,16 @@ import styled from "@emotion/styled";
 const NavBar = ({ showNav }) => {
     const [activeKey, setActiveKey] = useState('/');
 
+    // 切换路由
     const changeTab = (path) => {
         setActiveKey(path)
         navigate(path, true)
     }
+
+    // 初始化设置tab值
+    useEffect(()=> {
+        setActiveKey(new URL(window.location.href).pathname)
+    }, [])
 
     return (
         <BarLayout visible={showNav}

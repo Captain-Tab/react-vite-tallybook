@@ -30,9 +30,7 @@ const Statics = () => {
     }, [currentMonth]);
 
     useEffect(()=> {
-        console.log('totalType', totalType)
         const data = totalType === 'expense' ?  totalExpense : totalIncome;
-        console.log('data', data)
         setValidData(data > 0 )
     }, [totalType, totalExpense, totalIncome])
 
