@@ -135,7 +135,7 @@ const ContainerContent= styled.div`
     justify-content: flex-start;
     flex-wrap: wrap;
     p {
-      width: calc((100% - 20px) / 3);
+      width: calc((100% - 40px) / 3);
       text-align: center;
       padding: 12px 0;
       margin: 0 10px 15px 0;

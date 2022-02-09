@@ -28,6 +28,9 @@ const ICON_MAP = {
     },
     10: {
         icon: 'icon-funds-fill'
+    },
+    11: {
+        icon: 'icon-house'
     }
 
     // 4: {

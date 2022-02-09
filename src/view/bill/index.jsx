@@ -137,7 +137,7 @@ const Bill = () => {
 
         <PopupType ref={typeRef} onSelect={select} />
         <PopupDate ref={monthRef} mode="month" onSelect={selectMonth} />
-        <PopupAddBill ref={addRef} />
+        <PopupAddBill ref={addRef} onReload={refreshData} />
 
     </BillLayout>
 }
@@ -189,7 +189,7 @@ const BillTop = styled.div`
 `
 
 const BillContent = styled.div`
-  height: calc((100% - 100px));
+  height: calc((93% - 100px));
   overflow: hidden;
   overflow-y: scroll;
   background-color: #f9f9f9;
