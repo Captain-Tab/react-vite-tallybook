@@ -22,7 +22,7 @@ const Login = () => {
             // 判断是否是登录状态
             if (action === 'login') {
                 // 执行登录接口，获取 token
-                const { data } = await post('/api/user/login', {
+                const { data } = await post('/api/user/test', {
                     username,
                     password
                 });
