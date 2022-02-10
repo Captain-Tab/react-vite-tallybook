@@ -108,7 +108,6 @@ const UserHeader = styled.div`
 const UserPanel = styled.div`
   top: 150px;
   position: absolute;
-  height: 200px;
   width: 90%;
   left: 50%;
   transform: translateX(-50%);

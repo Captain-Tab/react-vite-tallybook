@@ -190,6 +190,7 @@ const BillTop = styled.div`
 
 const BillContent = styled.div`
   height: calc((93% - 100px));
+  width: 100%;
   overflow: hidden;
   overflow-y: scroll;
   background-color: #f9f9f9;

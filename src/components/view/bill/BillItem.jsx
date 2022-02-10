@@ -32,7 +32,7 @@ const BillItem = ({ bill }) => {
                     </>
                 }
                 description={<span style={{
-                    color: item.pay_type === 2 ? '#F3000A' : '#37DB5A'
+                    color: item.pay_type === 2 ? '#F3000A' : '#37DD5A'
                 }}>
                     {`${item.pay_type === 1 ? '-' : '+'}${item.amount}`}
                 </span>}

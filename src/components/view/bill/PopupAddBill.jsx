@@ -17,7 +17,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     const [expense, setExpense] = useState([]); // 支出类型数组
     const [income, setIncome] = useState([]); // 收入类型数组
     const [currentType, setCurrentType] = useState({});
-    const [amount, setAmount] = useState(''); // 账单价格
+    const [amount, setAmount] = useState('0'); // 账单价格
     const [remark, setRemark] = useState(''); // 备注
     const [showRemark, setShowRemark] = useState(false); // 备注输入框
     const [date, setDate] = useState(new Date()); // 日期
@@ -61,7 +61,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     // 切换收入还是支出
     const changeType = (type) => {
         setPayType(type);
-        // // 切换之后，默认给相应类型的第一个值
+        // 切换之后，默认给相应类型的第一个值
         if (type === 'expense') {
             setCurrentType(expense[0]);
         } else {
@@ -73,7 +73,6 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     const selectDate = (val) => {
         setDate(val)
     }
-
 
     // 监听输入框改变值
     const handleKey = async (key) => {
@@ -91,6 +90,10 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
         }
         // 点击确认按钮时
         if (key === 'ok') {
+            if(amountStr === '0') {
+                Toast.show('请输入金额')
+                return
+            }
             await addBill()
             return
         }
@@ -99,17 +102,17 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
         if(amountStr.length >= 13 || key === '.' && amountStr.includes('.')) {
             return
         }
+        const decimals = amountStr.split('.')[1]
+        // 限制两位数小数
+        if(decimals && decimals.length === 2)  {
+            return
+        }
         if(amountStr.indexOf('0') === 0) {
             amountStr = amountStr.slice(1)
         }
         const dotIndex = amountStr.indexOf('.')
         if(dotIndex !== -1) {
             amountStr = dotIndex === 0 ? '0' + amountStr : amountStr
-        }
-        const decimals = amountStr.split('.')[1]
-        // 限制两位数小数
-        if(decimals && decimals.length === 2 && !['ok', 'remove', 'hide'].includes(key) )  {
-            return
         }
         amountStr += key
         setAmount(amountStr)
@@ -313,6 +316,7 @@ const PopupType = styled.div`
   display: flex;
   overflow-x: auto;
   margin: 0 24px 20px 0;
+  padding: 3%;
   * {
     touch-action: pan-x;
   }
