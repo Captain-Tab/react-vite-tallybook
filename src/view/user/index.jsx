@@ -22,7 +22,7 @@ const User = () => {
     const logout = () => {
         Toast.show({
             content: '退出账号成功!',
-            stayTime: 2000,
+            stayTime: 600,
             afterClose: () => {
                 localStorage.removeItem('token')
                 navigate('/login')

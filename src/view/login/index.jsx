@@ -30,7 +30,7 @@ const Login = () => {
                 localStorage.setItem('token', data.token);
                 Toast.show({
                     content: '登录成功!',
-                    stayTime: 2000,
+                    stayTime: 600,
                     afterClose: () => {
                         navigate('/')
                     }

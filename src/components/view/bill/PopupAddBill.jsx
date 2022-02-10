@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, {forwardRef, useEffect, useRef, useState} from 'react';
 import cx from 'classnames';
-import { Popup, Icon, Keyboard, Input, Toast  } from 'zarm';
+import { Popup, Icon, Input, Toast  } from 'zarm';
+import Keyboard from "../../common/Keyboard";
 import dayjs from 'dayjs';
 import { get, post } from '../../../plugin/request';
 import CustomIcon from "../../common/CustomIcon";
@@ -69,11 +69,6 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
         }
     };
 
-    // 日期弹窗
-    const handleDatePop = () => {
-        dateRef.current && dateRef.current.show()
-    }
-
     // 日期选择回调
     const selectDate = (val) => {
         setDate(val)
@@ -81,26 +76,43 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
 
 
     // 监听输入框改变值
-    const handleMoney = async (value) => {
-        console.log('cal', value)
-        value = String(value)
-        // 点击是删除按钮时
-        if (value === 'delete') {
-            let _amount = amount.slice(0, amount.length - 1)
-            setAmount(_amount)
+    const handleKey = async (key) => {
+        let amountStr = amount.toString()
+        // 点击收起键盘
+        if(key === 'hide') {
+            setShow(false);
+            return
+        }
+        // 点击删除
+        if (key === 'remove') {
+            let result = amountStr.slice(0, amountStr.length - 1)
+            setAmount(result.length ? result : '0')
             return
         }
         // 点击确认按钮时
-        if (value === 'ok') {
+        if (key === 'ok') {
             await addBill()
             return
         }
-        // 当输入的值为 '.' 且 已经存在 '.'，则不让其继续字符串相加。
-        if (value === '.' && amount.includes('.')) return
-        // 小数点后保留两位，当超过两位时，不让其字符串继续相加。
-        if (value !== '.' && amount.includes('.') && amount && amount.split('.')[1].length >= 2) return
-        // amount += value
-        setAmount(amount + value)
+        // 当输入的值为 '.' 且已经存在 '.'，则不让其继续字符串相加
+        // 不允许超过13位数字
+        if(amountStr.length >= 13 || key === '.' && amountStr.includes('.')) {
+            return
+        }
+        if(amountStr.indexOf('0') === 0) {
+            amountStr = amountStr.slice(1)
+        }
+        const dotIndex = amountStr.indexOf('.')
+        if(dotIndex !== -1) {
+            amountStr = dotIndex === 0 ? '0' + amountStr : amountStr
+        }
+        const decimals = amountStr.split('.')[1]
+        // 限制两位数小数
+        if(decimals && decimals.length === 2 && !['ok', 'remove', 'hide'].includes(key) )  {
+            return
+        }
+        amountStr += key
+        setAmount(amountStr)
     }
 
     // 添加账单
@@ -124,7 +136,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
             Toast.show('修改成功');
         } else {
             await post('/api/bill/add', params);
-            setAmount('');
+            setAmount(0);
             setPayType('expense');
             setCurrentType(expense[0]);
             setDate(new Date());
@@ -210,7 +222,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
                 }
             </PopupRemark>
 
-            <Keyboard type="price" onKeyClick={(value) => handleMoney(value)} />
+            <Keyboard onKeyClick={handleKey}/>
             <PopupDate ref={dateRef} onSelect={selectDate} />
 
         </PopupContent>

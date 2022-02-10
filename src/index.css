@@ -14,7 +14,7 @@ html, body {
 *::after {
   box-sizing: border-box;
   margin: 0;
-  touch-action: pan-x;
+  /*touch-action: pan-x;*/
 }
 
 * {
