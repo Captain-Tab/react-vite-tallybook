@@ -43,10 +43,10 @@ export default defineConfig({
     server: {
         proxy: {
             '/proxy': {
-                // 当遇到 /api 路径时，将其转换成 target 的值
+                // 当遇到 /proxy 路径时，将其转换成 target 的值
                 target: 'http://127.0.0.1:7001',
                 changeOrigin: true,
-                rewrite: path => path.replace(/^\/proxy/, '') // 将 /api 重写为空
+                rewrite: path => path.replace(/^\/proxy/, '') // 将 /proxy 重写为空
             }
         }
     }

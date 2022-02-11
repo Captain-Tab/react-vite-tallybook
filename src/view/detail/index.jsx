@@ -1,13 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import TopBar from "../../components/layout/TopBar";
 import styled from "@emotion/styled";
 import qs from 'query-string';
-import { get, post } from '../../plugin/request'
 import { Modal, Toast } from "zarm";
 import dayjs from "dayjs";
 import CustomIcon from "../../components/common/CustomIcon";
 import constVariable from "../../const";
 import PopupAddBill from "../../components/view/bill/PopupAddBill";
+import {fetchBillDetail, removeBill} from "../../fetch";
 
 const Detail = () => {
     const editRef = useRef();
@@ -21,7 +20,7 @@ const Detail = () => {
 
     // 获取账单详情
     const getDetail = async () => {
-        const { data } = await get(`/api/bill/detail?id=${id}`);
+        const { data } = await fetchBillDetail(id);
         setDetail(data);
     }
 
@@ -31,7 +30,7 @@ const Detail = () => {
             title: '删除',
             content: '确认删除账单？',
             onOk: async () => {
-                await post('/api/bill/delete', { id })
+                await removeBill(id)
                 Toast.show('删除成功')
                 history.back()
             },

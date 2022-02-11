@@ -3,13 +3,13 @@ import {Icon, Pull} from "zarm";
 import dayjs from 'dayjs'
 import styled from "@emotion/styled";
 import BillItem from "../../components/view/bill/BillItem";
-import { get } from '/src/plugin/request'
-import {LOAD_STATE, REFRESH_STATE} from "../../const";
+import { LOAD_STATE, REFRESH_STATE } from "../../const";
 import PopupType from "../../components/view/bill/PopupType";
 import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import PopupAddBill from "../../components/view/bill/PopupAddBill";
 import EmptyPanel from "../../components/common/EmptyPanel";
+import { getBillInfo } from "../../fetch";
 
 const Bill = () => {
     const typeRef = useRef(); // 账单类型 ref
@@ -30,7 +30,12 @@ const Bill = () => {
     }, [page, currentSelect, currentTime])
 
     const getBillList = async () => {
-        const { data } = await get(`/api/bill/list?page=${page}&page_size=5&date=${currentTime}&type_id=${currentSelect.id || 'all'}`);
+        const { data } = await getBillInfo({
+            page,
+            page_size: 5,
+            date: currentTime,
+            type_id: currentSelect.id
+        })
         // 下拉刷新，重制数据
         if (page === 1) {
             setList(data.list);
@@ -155,11 +160,12 @@ const BillTop = styled.div`
   opacity: 0.8;
   color: #fff;
   height: 100px;
+  width: 100%;
   padding: 4%;
   position: relative;
   .sum {
     span {
-      font-size: 18px;
+      font-size: 17px;
       b {
         font-family: DINCondensed-Bold,DINCondensed, serif;
         margin-left: 5px;

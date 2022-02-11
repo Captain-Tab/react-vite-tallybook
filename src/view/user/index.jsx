@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styled from "@emotion/styled";
-import { get } from '../../plugin/request'
-import {Cell, Toast} from "zarm";
+import { Cell, Toast } from "zarm";
 import CustomIcon from "../../components/common/CustomIcon";
 import { navigate } from "hookrouter";
+import {fetchUserInfo} from "../../fetch";
 
 const User = () => {
     const [user, setUser] = useState({});
@@ -14,7 +14,7 @@ const User = () => {
 
     // 获取用户信息
     const getUserInfo = async () => {
-        const { data } = await get('/api/user/get_userinfo');
+        const { data } = await fetchUserInfo()
         setUser(data);
     };
 

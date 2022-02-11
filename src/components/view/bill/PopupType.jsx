@@ -1,9 +1,9 @@
 import React, { forwardRef, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Popup, Icon } from 'zarm'
-import { get } from '../../../plugin/request'
 import styled from "@emotion/styled";
 import cx from 'classnames'
+import {fetchBillType} from "../../../fetch";
 
 const PopupType = forwardRef(({ onSelect }, ref) => {
     const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ const PopupType = forwardRef(({ onSelect }, ref) => {
 
     useEffect(async () => {
         // 请求标签接口放在弹窗内，这个弹窗可能会被复用，所以请求如果放在外面，会造成代码冗余。
-        const { data: { list } } = await get('/api/type/list')
+        const { data: { list } } = await fetchBillType()
         setExpense(list.filter(i => i.type === 1))
         setIncome(list.filter(i => i.type === 2))
     }, [])

@@ -3,11 +3,11 @@ import cx from 'classnames';
 import { Popup, Icon, Input, Toast  } from 'zarm';
 import Keyboard from "../../common/Keyboard";
 import dayjs from 'dayjs';
-import { get, post } from '../../../plugin/request';
 import CustomIcon from "../../common/CustomIcon";
 import PopupDate from "./PopupDate";
 import constVariable from "../../../const";
 import styled from "@emotion/styled";
+import {addNewBill, fetchBillType, updateBill} from "../../../fetch";
 
 const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     const dateRef = useRef()
@@ -47,7 +47,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
     };
 
     useEffect(async () => {
-        const { data: { list } } = await get('/api/type/list');
+        const { data: { list } } = await fetchBillType();
         const _expense = list.filter(i => i.type === 1); // 支出类型
         const _income = list.filter(i => i.type === 2); // 收入类型
         setExpense(_expense)
@@ -124,7 +124,7 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
             Toast.show('请输入具体金额')
             return
         }
-        const params = {
+        const data = {
             amount: Number(amount).toFixed(2),
             type_id: currentType.id,
             type_name: currentType.name,
@@ -133,12 +133,12 @@ const PopupAddBill = forwardRef(({ detail = {}, onReload }, ref) => {
             remark: remark || ''
         }
         if (id) {
-            params.id = id;
+            data.id = id;
             // 如果有 id 需要调用详情更新接口
-            await post('/api/bill/update', params);
+            await addNewBill( data);
             Toast.show('修改成功');
         } else {
-            await post('/api/bill/add', params);
+            await updateBill(data);
             setAmount(0);
             setPayType('expense');
             setCurrentType(expense[0]);

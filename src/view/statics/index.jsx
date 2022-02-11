@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {Icon, Progress} from 'zarm';
+import { Icon, Progress } from 'zarm';
 import cx from 'classnames';
 import dayjs from 'dayjs';
-import { get } from '../../plugin/request'
 import styled from "@emotion/styled";
 import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import constVariable from "../../const";
 import EmptyPanel from "../../components/common/EmptyPanel";
+import {getMonthData} from "../../fetch";
 
 let proportionChart = null;
 
@@ -37,7 +37,7 @@ const Statics = () => {
 
     // 获取数据详情
     const getData = async () => {
-        const { data } = await get(`/api/bill/data?date=${currentMonth}`);
+        const { data } = await getMonthData(currentMonth);
 
         setTotalExpense(data.total_expense);
         setTotalIncome(data.total_income);

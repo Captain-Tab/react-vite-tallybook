@@ -3,8 +3,8 @@ import CustomIcon from "../../components/common/CustomIcon";
 import { Button, Cell, Checkbox, Input, Toast } from "zarm";
 import styled from '@emotion/styled';
 import LogoSrc from '/src/assets/img/logo.png';
-import { post } from '/src/plugin/request'
-import {navigate} from "hookrouter";
+import { navigate } from "hookrouter";
+import {userLogin, userRegister} from "../../fetch";
 
 const Login = () => {
 
@@ -22,10 +22,7 @@ const Login = () => {
             // 判断是否是登录状态
             if (action === 'login') {
                 // 执行登录接口，获取 token
-                const { data } = await post('/api/user/test', {
-                    username,
-                    password
-                });
+                const { data } = await userLogin({ username, password })
                 // 将 token 写入 localStorage
                 localStorage.setItem('token', data.token);
                 Toast.show({
@@ -36,10 +33,7 @@ const Login = () => {
                     }
                 })
             } else {
-                await post('/api/user/register', {
-                    username,
-                    password
-                });
+                await userRegister( { username, password });
                 Toast.show('注册成功');
                 // 注册成功，自动将 tab 切换到 login 状态
                 setActionType('login');

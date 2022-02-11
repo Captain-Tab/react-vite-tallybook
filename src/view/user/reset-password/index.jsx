@@ -2,7 +2,7 @@ import React from 'react'
 import styled from "@emotion/styled";
 import { Cell, Input, Toast} from "zarm";
 import { createForm } from "rc-form";
-import { post } from "../../../plugin/request";
+import { resetPassword } from "../../../fetch";
 
 const Reset = (props) => {
     // Account 通过 createForm 高阶组件包裹之后，可以在 props 中获取到 form 属性
@@ -19,7 +19,7 @@ const Reset = (props) => {
                 Toast.show('请输入一致的新密码');
                 return
             }
-            const res = await post('/api/user/reset', {
+            const res = await resetPassword({
                 old_pass: value.oldpass,
                 new_pass: value.newpass,
             })

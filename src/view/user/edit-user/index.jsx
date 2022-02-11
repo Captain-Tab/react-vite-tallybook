@@ -1,12 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react'
 import styled from "@emotion/styled";
-import CustomIcon from "../../../components/common/CustomIcon";
-import {get, post} from "../../../plugin/request";
-import PopupInput from "../../../components/view/user/PopupInput";
-import {FilePicker, Toast} from "zarm";
-import axios from "axios";
-import {navigate} from "hookrouter";
-
+import CustomIcon from "@/components/common/CustomIcon";
+import PopupInput from "@/components/view/user/PopupInput";
+import { FilePicker, Toast } from "zarm";
+import { navigate } from "hookrouter";
+import {
+    fetchUserInfo,
+    updateUserInfo,
+    uploadFile } from "@/fetch";
+import {convertImgUrl} from "../../../helper";
 
 const EditUser = () => {
     const inputRef = useRef(); // 输入类型 ref
@@ -22,7 +24,7 @@ const EditUser = () => {
 
     // 获取用户信息
     const getUserInfo = async () => {
-        const { data } = await get('/api/user/get_userinfo');
+        const { data } = await fetchUserInfo()
         setUser(data)
     }
 
@@ -33,7 +35,7 @@ const EditUser = () => {
     }
 
     // 获取图片回调
-    const handleSelect = (file) => {
+    const handleSelect = async (file) => {
         console.log('file.file', file.file)
         if (file && file.file.size > 200 * 1024) {
             Toast.show('上传头像不得超过 200 KB！！')
@@ -42,21 +44,10 @@ const EditUser = () => {
         let formData = new FormData()
         // 生成 form-data 数据类型
         formData.append('file', file.file)
-        // 通过 axios 设置  'Content-Type': 'multipart/form-data', 进行文件上传
-        axios({
-            method: 'post',
-            url: `http://127.0.0.1:7001/api/upload`,
-            data: formData,
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        }).then(res => {
-            // 返回图片地址
-            const imgUrl = `http://127.0.0.1:7001` + res.data
-            setUser({
-                ...user,
-                avatar: imgUrl
-            })
+        const { data } = await uploadFile(formData)
+        setUser({
+            ...user,
+            avatar: convertImgUrl(data)
         })
     }
 
@@ -76,7 +67,7 @@ const EditUser = () => {
 
     // 更新用户信息
     const submit = async () => {
-        await post('/api/user/edit_userinfo', user);
+        await updateUserInfo(user);
         Toast.show('修改用户成功');
         navigate('/user')
     }
