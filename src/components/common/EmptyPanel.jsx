@@ -10,7 +10,6 @@ const EmptyPanel = () => {
     </EmptyContainer>
 };
 
-
 export default EmptyPanel;
 
 const EmptyContainer = styled.div`

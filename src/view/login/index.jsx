@@ -7,41 +7,37 @@ import { navigate } from "hookrouter";
 import {userLogin, userRegister} from "../../fetch";
 
 const Login = () => {
-
     const [username, setUsername] = useState(''); // 账号
     const [password, setPassword] = useState(''); // 密码
     const [action, setActionType] = useState('login')
 
+    // 登录
+    const login = async () => {
+        const { data } = await userLogin({ username, password })
+        Toast.show({
+            content: '登录成功!',
+            stayTime: 600,
+            afterClose: () => {
+                localStorage.setItem('token', data.token);
+                navigate('/')
+            }
+        })
+    }
+
+    // 注册
+    const register = async () => {
+        await userRegister( { username, password });
+        Toast.show('注册成功');
+        setActionType('login');
+    }
+
     // 提交表单
-    const onSubmit = async () => {
+    const onSubmit = () => {
         if (!username || !password) {
             Toast.show('请输入账号和密码')
             return
         }
-        try {
-            // 判断是否是登录状态
-            if (action === 'login') {
-                // 执行登录接口，获取 token
-                const { data } = await userLogin({ username, password })
-                // 将 token 写入 localStorage
-                localStorage.setItem('token', data.token);
-                Toast.show({
-                    content: '登录成功!',
-                    stayTime: 600,
-                    afterClose: () => {
-                        navigate('/')
-                    }
-                })
-            } else {
-                await userRegister( { username, password });
-                Toast.show('注册成功');
-                // 注册成功，自动将 tab 切换到 login 状态
-                setActionType('login');
-            }
-        } catch (error) {
-            Toast.show(error);
-        }
-
+        action === 'login' ? login() : register()
     };
 
     return <LoginBody>
@@ -64,14 +60,6 @@ const Login = () => {
                     onChange={(value) => setPassword(value)}
                 />
             </Cell>
-            {/*<Cell icon={<CustomIcon type="icon-lock" />}>*/}
-            {/*    <Input*/}
-            {/*        clearable*/}
-            {/*        type="text"*/}
-            {/*        placeholder="请输入验证码"*/}
-            {/*        onChange={(value) => setVerify(value)} />*/}
-            {/*    <Captcha charNum={4} />*/}
-            {/*</Cell>*/}
         </div>
         <BottomPart>
             <div className={'tipPart'}>
@@ -118,7 +106,6 @@ const LogoImg = styled.img`
     margin: 0 auto;
 `
 
-// bottom  css
 const BottomPart = styled.div`
     margin: 15px;
     .tipPart {

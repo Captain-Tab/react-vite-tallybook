@@ -34,19 +34,21 @@ const Keyboard = ({onKeyClick}) => {
             })}
         </div>
         <div className={'operationPad'}>
-            <CustomIcon type={'icon-remove'} className={'operation remove'} onClick={()=> keyChange('remove')}/>
-            <CustomIcon type={'icon-ok'} className={'operation ok'} onClick={ ()=> keyChange('ok')} />
+            <CustomIcon type={'icon-remove'}
+                        className={'operation remove'}
+                        onClick={()=> keyChange('remove')}/>
+            <CustomIcon type={'icon-ok'}
+                        className={'operation ok'}
+                        onClick={ ()=> keyChange('ok')} />
         </div>
     </Wrapper>
 };
-
 
 export default Keyboard;
 
 Keyboard.propTypes = {
     onKeyClick: PropTypes.func, // 选择后的回调
 }
-
 
 const Wrapper = styled.div`
     display: flex;

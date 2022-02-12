@@ -7,9 +7,8 @@ import PopupDate from "../../components/view/bill/PopupDate";
 import CustomIcon from "../../components/common/CustomIcon";
 import constVariable from "../../const";
 import EmptyPanel from "../../components/common/EmptyPanel";
-import {getMonthData} from "../../fetch";
-
-let proportionChart = null;
+import { getMonthData } from "../../fetch";
+import Echart from "@/components/common/Echart";
 
 const Statics = () => {
     const monthRef = useRef();
@@ -18,15 +17,47 @@ const Statics = () => {
     const [validData, setValidData] = useState(true)
     const [totalExpense, setTotalExpense] = useState(0); // 总支出
     const [totalIncome, setTotalIncome] = useState(0); // 总收入
+    const [chartData, setChartData] = useState({}); // 图表数据
     const [expenseData, setExpenseData] = useState([]); // 支出数据
     const [incomeData, setIncomeData] = useState([]); // 收入数据
 
+    useEffect(()=> {
+        const data = totalType === 'expense' ? expenseData : incomeData
+        const chartOption = {
+            tooltip: {
+                trigger: 'item',
+                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            // 图例
+            legend: {
+                data: data.map(item => item.type_name)
+            },
+            series: [
+                {
+                    name: '支出',
+                    type: 'pie',
+                    radius: '55%',
+                    data: data.map(item => {
+                        return {
+                            value: item.number,
+                            name: item.type_name
+                        }
+                    }),
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        }
+        setChartData(chartOption)
+    },[totalType, expenseData, incomeData ])
+
     useEffect( async() => {
         await getData();
-        return () => {
-            // 每次组件卸载的时候，需要释放图表实例。clear 只是将其清空不会释放。
-            proportionChart.dispose();
-        };
     }, [currentMonth]);
 
     useEffect(()=> {
@@ -47,9 +78,6 @@ const Statics = () => {
         const income_data = data.total_data.filter(item => item.pay_type === 2).sort((a, b) => b.number - a.number); // 过滤出账单类型为收入的项
         setExpenseData(expense_data);
         setIncomeData(income_data);
-
-        // 绘制饼图
-        setPieChart(totalType === 'expense' ? expense_data : income_data);
     };
 
     // 月份弹窗开关
@@ -64,10 +92,9 @@ const Statics = () => {
     // 切换收支构成类型
     const changeTotalType = (type) => {
         setTotalType(type);
-        setPieChart(type === 'expense' ? expenseData : incomeData);
     };
 
-    const progressList = () => {
+    const ProgressBar = () => {
         const listData = totalType === 'expense'? expenseData : incomeData
         return (
             listData.map((item, index)=> {
@@ -95,43 +122,6 @@ const Statics = () => {
             }))
     }
 
-    // 绘制饼图方法
-    const setPieChart = (data) => {
-        if (echarts) {
-            proportionChart = echarts.init(document.getElementById('proportion'));
-            proportionChart.setOption({
-                tooltip: {
-                    trigger: 'item',
-                    formatter: '{a} <br/>{b} : {c} ({d}%)'
-                },
-                // 图例
-                legend: {
-                    data: data.map(item => item.type_name)
-                },
-                series: [
-                    {
-                        name: '支出',
-                        type: 'pie',
-                        radius: '55%',
-                        data: data.map(item => {
-                            return {
-                                value: item.number,
-                                name: item.type_name
-                            }
-                        }),
-                        emphasis: {
-                            itemStyle: {
-                                shadowBlur: 10,
-                                shadowOffsetX: 0,
-                                shadowColor: 'rgba(0, 0, 0, 0.5)'
-                            }
-                        }
-                    }
-                ]
-            })
-        };
-    };
-
     return <StaticsContent>
         <StaticsSum>
             <div className={'time'} onClick={monthShow}>
@@ -155,12 +145,14 @@ const Statics = () => {
         </StaticsSum>
 
         <StaticsChart show={validData}>
-            <div className={'charArea'}>
+            <div className={'chartArea'}>
                 <ProgressArea>
-                    { progressList() }
+                    <ProgressBar />
                 </ProgressArea>
 
-                <PiechartArea id={'proportion'} />
+                <Echart type='pie'
+                        data={chartData}
+                        style={{height: '400px'}}/>
             </div>
 
             <div className={'empty'}>
@@ -262,7 +254,8 @@ const StaticsChart = styled.div`
     height: calc(93% - 110px);
     background-color: #fff;
     overflow-y: scroll;
-    .charArea {
+    .chartArea {
+      height: 600px;
       display: ${props => props.show ? 'block': 'none'};
     }
     .empty {
@@ -295,7 +288,8 @@ const ProgressArea = styled.div`
       }
       .amount {
         font-size: 14px;
-        margin: 0 20px;
+        width: 70px;
+        margin: 0 10px;
       }
       .progressArea {
         width: 50%;
