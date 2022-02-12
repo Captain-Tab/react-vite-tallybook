@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Cell, Toast } from "zarm";
 import CustomIcon from "../../components/common/CustomIcon";
 import { navigate } from "hookrouter";
-import {fetchUserInfo} from "../../fetch";
+import { fetchUserInfo } from "../../fetch";
 
 const User = () => {
     const [user, setUser] = useState({});
@@ -42,7 +42,7 @@ const User = () => {
             </div>
             <div className={'userInfo'}>
                 <p className={'name'}>用户: { user.username || '' }</p>
-                <p className={'signature'}>个性签名: { user.signature || '' }</p>
+                <p className={'signature'}>昵称: { user.nickname || '' }</p>
             </div>
         </UserHeader>
         <UserPanel>

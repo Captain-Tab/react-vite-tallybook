@@ -52,11 +52,11 @@ export const fetchUserInfo = () => {
 }
 
 // 修改用户信息
-export const updateUserInfo = ({ avatar, username, signature }) => {
+export const updateUserInfo = ({ avatar, nickname, signature }) => {
     return request({
         url: '/user/edit_userinfo',
         method: 'POST',
-        data: { avatar, username, signature }
+        data: { avatar, nickname, signature }
     })
 }
 

@@ -32,7 +32,7 @@ const PopupInput = forwardRef(({ onInput, label }, ref) => {
             </ContainerHeader>
             <ContainerBody>
                 <div className={'center'}>
-                    <p className={'label'}>{label.name === 'username' ? '用户名' : '签名'}: </p>
+                    <p className={'label'}>{label.name === 'nickname' ? '昵称' : '签名'}: </p>
                     <Input
                         clearable
                         className={'input'}

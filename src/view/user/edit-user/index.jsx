@@ -1,25 +1,23 @@
-import React, {useEffect, useRef, useState} from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from "@emotion/styled";
 import CustomIcon from "@/components/common/CustomIcon";
 import PopupInput from "@/components/view/user/PopupInput";
 import { FilePicker, Toast } from "zarm";
 import { navigate } from "hookrouter";
-import {
-    fetchUserInfo,
-    updateUserInfo,
-    uploadFile } from "@/fetch";
-import {convertImgUrl} from "../../../helper";
+import { convertImgUrl } from "../../../helper";
+import { fetchUserInfo, updateUserInfo, uploadFile } from "@/fetch";
 
 const EditUser = () => {
     const inputRef = useRef(); // 输入类型 ref
     const [label, setLabel] = useState({
         name: '',
         value: ''
-    }) // 输入框名称
+    })
     const [user, setUser] = useState({
         avatar: '',
         username: '',
-        signature: ''
+        signature: '',
+        nickname: ''
     })
 
     // 获取用户信息
@@ -36,7 +34,6 @@ const EditUser = () => {
 
     // 获取图片回调
     const handleSelect = async (file) => {
-        console.log('file.file', file.file)
         if (file && file.file.size > 200 * 1024) {
             Toast.show('上传头像不得超过 200 KB！！')
             return
@@ -54,10 +51,10 @@ const EditUser = () => {
     // 获取输入内容
     const changeInput = (label) => {
         setLabel(label)
-        label.name === 'username' ?
+        label.name === 'nickname' ?
         setUser({
             ...user,
-            username: label.value
+            nickname: label.value
         }) :
         setUser({
             ...user,
@@ -78,6 +75,13 @@ const EditUser = () => {
     }, []);
 
     return <EditUserContent>
+    <UserInfoDetail>
+        <p>用户名</p>
+        <div className={'right'}>
+            <p>{ user.username }</p>
+        </div>
+    </UserInfoDetail>
+
     <FilePicker onChange={handleSelect} accept="image/*">
         <UserInfoDetail>
             <p>头像</p>
@@ -89,15 +93,14 @@ const EditUser = () => {
     </FilePicker>
 
     <UserInfoDetail onClick={()=> showInput({
-        name: 'username',
-        value: user.username
+        name: 'nickname',
+        value: user.nickname
     })}>
-        <p>用户名</p>
+        <p>昵称</p>
         <div className={'right'}>
-            <p>{ user.username }</p>
+            <p>{ user.nickname }</p>
             <CustomIcon type="icon-right" theme='primary' className={'icon'}/>
         </div>
-
     </UserInfoDetail>
     <UserInfoDetail onClick={()=> showInput({
         name: 'signature',
