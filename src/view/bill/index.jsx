@@ -88,6 +88,7 @@ const Bill = () => {
         setPage(1);
         setCurrentSelect(item)
     }
+
     // 筛选月份
     const selectMonth = (item) => {
         setRefreshing(REFRESH_STATE.loading);

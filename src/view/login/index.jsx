@@ -72,9 +72,13 @@ const Login = () => {
                 }
 
                 { action === 'login' ?
-                    <div className={'goLogin'}>暂无账号？<p onClick={()=> setActionType('register')}>点击注册</p></div>
+                    <div className={'goLogin'}>暂无账号？
+                        <p onClick={()=> setActionType('register')}>点击注册</p>
+                    </div>
                     :
-                    <div className={'goLogin'}>已有账号？ <p onClick={()=> setActionType('login')}>立即登录</p></div>
+                    <div className={'goLogin'}>已有账号？
+                        <p onClick={()=> setActionType('login')}>立即登录</p>
+                    </div>
                 }
             </div>
 

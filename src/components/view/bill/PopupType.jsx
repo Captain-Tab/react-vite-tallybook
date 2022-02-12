@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Popup, Icon } from 'zarm'
 import styled from "@emotion/styled";
 import cx from 'classnames'
-import {fetchBillType} from "../../../fetch";
+import { fetchBillType } from "../../../fetch";
 
 const PopupType = forwardRef(({ onSelect }, ref) => {
     const [show, setShow] = useState(false);
@@ -40,8 +40,7 @@ const PopupType = forwardRef(({ onSelect }, ref) => {
         direction="bottom"
         onMaskClick={() => setShow(false)}
         destroy={false}
-        mountContainer={() => document.body}
-    >
+        mountContainer={() => document.body}>
         <PopupTypeContainer>
             <ContainerHeader>
                 请选择类型

@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import CustomIcon from "../../components/common/CustomIcon";
 import constVariable from "../../const";
 import PopupAddBill from "../../components/view/bill/PopupAddBill";
-import {fetchBillDetail, removeBill} from "../../fetch";
+import { fetchBillDetail, removeBill } from "../../fetch";
 
 const Detail = () => {
     const editRef = useRef();
