@@ -6,7 +6,6 @@ import Router from "./router";
 import { ThemeProvider } from "@emotion/react";
 import ErrorBoundary from 'react-error-boundaries'
 
-
 // 主题变量
 const theme = {
     color: '#F08830',
