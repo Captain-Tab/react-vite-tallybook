@@ -5,7 +5,9 @@
 ### 预览
 [在线预览](http://49.235.126.217:5000/)
 
-![](https://s3.bmp.ovh/imgs/2022/02/25eadf1207b6c40f.gif)
+
+<img src = 'https://s3.bmp.ovh/imgs/2022/02/25eadf1207b6c40f.gif' width='150px'/>
+
 
 ### 模块
 * 用户注册，登录， 修改用户信息，重置密码
