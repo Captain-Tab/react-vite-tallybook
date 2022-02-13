@@ -13,13 +13,13 @@ const Login = () => {
 
     // 登录
     const login = async () => {
-        const { data } = await userLogin({ username, password })
+        const { data } = await userLogin({ username, password });
         Toast.show({
             content: '登录成功!',
-            stayTime: 600,
+            stayTime: 700,
             afterClose: () => {
                 localStorage.setItem('token', data.token);
-                navigate('/')
+                navigate('/');
             }
         })
     }

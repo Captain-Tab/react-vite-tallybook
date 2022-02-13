@@ -6,7 +6,6 @@ const MODE = import.meta.env.MODE // 环境变量
 axios.defaults.baseURL = MODE === 'development' ? '/proxy' : 'http://49.235.126.217:7001'
 // axios.defaults.withCredentials = true
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['Authorization'] = `${localStorage.getItem('token') || null}`
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 axios.interceptors.response.use(res => {
@@ -23,6 +22,15 @@ axios.interceptors.response.use(res => {
     }
 
     return res.data
+})
+
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    // 为请求头对象添加token验证的Authorization字段
+    if (token) {
+        config.headers.common['Authorization'] = token
+    }
+    return config
 })
 
 export default axios
